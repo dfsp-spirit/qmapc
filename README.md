@@ -2,6 +2,12 @@
 Map file parser and converter for the Quake FPS games
 
 
+## License and author
+
+   qmapc was written by Tim Schaefer, http://rcmd.org/ts/
+   
+   For license info, see the LICENSE file.
+
 ## Usage
 
    Not ready yet.
