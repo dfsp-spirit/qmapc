@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.rcmd.qmapc;
+package org.rcmd.qmapc.parsing.lexer;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.rcmd.qmapc.Main;
 
 /**
  *
  * @author spirit
  */
-public class MainTest {
+public class Quake2MapLexerTest {
     
-    public MainTest() {
+    
+    public Quake2MapLexerTest() {
     }
     
     @BeforeClass
@@ -41,9 +41,11 @@ public class MainTest {
      * Test of main method, of class Main.
      */
     @org.junit.Test
-    public void testMain() {
-        String[] args = new String[]{"Quake map here"};
-        Main.main(args);
+    public void testQuake2MapLexer() {        
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
     }
     
 }
+
+    
