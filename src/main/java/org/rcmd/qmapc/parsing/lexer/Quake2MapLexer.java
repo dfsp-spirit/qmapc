@@ -25,8 +25,9 @@ public class Quake2MapLexer extends Lexer {
     public static int COMMENT = 13;
     public static int DOUBLEQUOTATIONMARKS = 14;
     public static int PATH = 15;
+    public static int ENTITY_ID = 16;
 
-    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH"};
+    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH", "ENTITY_ID"};
 
     public Quake2MapLexer(String input) {
         super(input);
@@ -89,10 +90,19 @@ public class Quake2MapLexer extends Lexer {
         } while (this.isLetter() || this.isNamePathOrCommentCompatibleFollowupChar());
         String completeTokenString = buf.toString();
         if(completeTokenString.startsWith("//")) {
-            if(completeTokenString.startsWith("// brush ")) {       // Some quake editors like GtkRadiant add the brush ID in a commit before each brush.
+            if(completeTokenString.startsWith("// brush ")) {       // Some quake editors like GtkRadiant add the brush ID in a comment before each brush.
                 try {
                     int brushID = Integer.parseInt(completeTokenString.substring("// brush ".length() + 1));
                     return new Token(BRUSH_ID, "" + brushID);
+                }
+                catch(Exception e) {
+                    return new Token(COMMENT, completeTokenString);
+                }                
+            }
+            else if(completeTokenString.startsWith("// entity ")) {       // Some quake editors like GtkRadiant add the entity ID in a comment before each entity.
+                try {
+                    int entityID = Integer.parseInt(completeTokenString.substring("// entity ".length() + 1));
+                    return new Token(ENTITY_ID, "" + entityID);
                 }
                 catch(Exception e) {
                     return new Token(COMMENT, completeTokenString);
