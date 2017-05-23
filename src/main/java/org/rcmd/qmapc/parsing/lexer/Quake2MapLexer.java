@@ -20,8 +20,12 @@ public class Quake2MapLexer extends Lexer {
     public static int SLASH = 8;
     public static int DOT = 9;
     public static int INTEGER = 10;
+    public static int FLOAT = 11;
+    public static int BRUSH_ID = 12;
+    public static int COMMENT = 13;
+    public static int DOUBLEQUOTATIONMARKS = 14;
 
-    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER"};
+    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS"};
 
     public Quake2MapLexer(String input) {
         super(input);
@@ -39,6 +43,22 @@ public class Quake2MapLexer extends Lexer {
     public Boolean isDigit() {
         return (this.c >= '0' && this.c <= '9');
     }
+    
+    public Boolean isDigitCompatibleStartChar() {
+        return (this.c == '-');
+    }
+    
+    public Boolean isDigitCompatibleFollowupChar() {
+        return (this.c == '.');
+    }
+    
+    public Boolean isPathOrCommentCompatibleStartChar() {
+        return (this.c == '/');
+    }
+    
+    public Boolean isNamePathOrCommentCompatibleFollowupChar() {
+        return (this.c == '/' || this.c == '_' || this.c == ' ' || this.c == '\t');
+    }
 
     void handleWhiteSpace() {
         while (this.c == ' ' || this.c == '\n' || this.c == '\r' || this.c == '\t') {
@@ -46,23 +66,44 @@ public class Quake2MapLexer extends Lexer {
         }
     }
     
-    Token handleInteger() {
+    Token handleDigit() {
         StringBuilder buf = new StringBuilder();
         do {
             buf.append(this.c);
             this.consume();
-        } while (this.isDigit());
-        return new Token(NAME, buf.toString());
+        } while (this.isDigit() || this.isDigitCompatibleFollowupChar());
+        if(buf.toString().contains(".")) {
+            return new Token(FLOAT, buf.toString());
+        }
+        else {
+            return new Token(INTEGER, buf.toString());
+        }        
     }
 
-    Token handleName() {
+    Token handlePathOrComment() {
         StringBuilder buf = new StringBuilder();
         do {
             buf.append(this.c);
             this.consume();
-        } while (this.isLetter());
+        } while (this.isLetter() || this.isNamePathOrCommentCompatibleFollowupChar());
+        String completeTokenString = buf.toString();
+        if(completeTokenString.startsWith("//")) {
+            if(completeTokenString.startsWith("// brush ")) {       // Some quake editors like GtkRadiant add the brush ID in a commit before each brush.
+                try {
+                    int brushID = Integer.parseInt(completeTokenString.substring("// brush ".length() + 1));
+                    return new Token(BRUSH_ID, "" + brushID);
+                }
+                catch(Exception e) {
+                    return new Token(COMMENT, completeTokenString);
+                }                
+            }
+            else {
+                return new Token(COMMENT, completeTokenString);
+            }
+        }
         return new Token(NAME, buf.toString());
     }
+        
 
     @Override
     public Token nextToken() {
@@ -83,9 +124,20 @@ public class Quake2MapLexer extends Lexer {
                 case ']':
                     this.consume();
                     return new Token(SQUAREBRACKET_R, "]");
+                case '(':
+                    this.consume();
+                    return new Token(ROUNDBRACKET_L, "(");
+                case ')':
+                    this.consume();
+                    return new Token(ROUNDBRACKET_R, ")");
+                case '"':
+                    this.consume();
+                    return new Token(DOUBLEQUOTATIONMARKS, "\"");
                 default:
-                    if (this.isLetter()) {
-                        return this.handleName();
+                    if (this.isLetter() || this.isPathOrCommentCompatibleStartChar()) {
+                        return this.handlePathOrComment();
+                    } else if(this.isDigit() || this.isDigitCompatibleStartChar()) {
+                        return this.handleDigit();
                     } else {
                         throw new Error("Hit invalid character '" + this.c + "'.");
                     }
