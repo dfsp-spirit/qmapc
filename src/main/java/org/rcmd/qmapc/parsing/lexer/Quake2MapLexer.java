@@ -24,8 +24,9 @@ public class Quake2MapLexer extends Lexer {
     public static int BRUSH_ID = 12;
     public static int COMMENT = 13;
     public static int DOUBLEQUOTATIONMARKS = 14;
+    public static int PATH = 15;
 
-    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS"};
+    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH"};
 
     public Quake2MapLexer(String input) {
         super(input);
@@ -57,7 +58,7 @@ public class Quake2MapLexer extends Lexer {
     }
     
     public Boolean isNamePathOrCommentCompatibleFollowupChar() {
-        return (this.c == '/' || this.c == '_' || this.c == ' ' || this.c == '\t');
+        return (this.c == '/' || this.c == '_' || this.c == ' ' || this.c == '\t' || this.isDigit());
     }
 
     void handleWhiteSpace() {
@@ -101,7 +102,7 @@ public class Quake2MapLexer extends Lexer {
                 return new Token(COMMENT, completeTokenString);
             }
         }
-        return new Token(NAME, buf.toString());
+        return new Token(PATH, buf.toString());
     }
         
 
