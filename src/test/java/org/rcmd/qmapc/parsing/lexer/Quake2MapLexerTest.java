@@ -86,6 +86,30 @@ public class Quake2MapLexerTest {
     }
     
     @org.junit.Test
+    public void testItLexesValidFloatUnsigned() {
+        q2ml = new Quake2MapLexer(inputFloatUnsigned);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();            
+        }
+        assertEquals(1, tokenList.size());
+        assertEquals(Quake2MapLexer.FLOAT, tokenList.get(0).type);
+    }
+    
+    @org.junit.Test
+    public void testItLexesValidFloatNegative() {
+        q2ml = new Quake2MapLexer(inputFloatNegative);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();            
+        }
+        assertEquals(1, tokenList.size());
+        assertEquals(Quake2MapLexer.FLOAT, tokenList.get(0).type);
+    }
+    
+    @org.junit.Test
     public void testItLexesValidComment() {
         q2ml = new Quake2MapLexer(inputComment);
         token = q2ml.nextToken();
