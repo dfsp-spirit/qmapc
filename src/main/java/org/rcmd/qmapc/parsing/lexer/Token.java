@@ -16,9 +16,14 @@ public class Token {
         this.text = text;
     }
     
+    @Override
     public String toString() {
         String tokenName = Quake2MapLexer.tokenNames[this.type];
         return "<'" + this.text + "'," + tokenName + ">";
+    }
+    
+    public void report() {
+        System.out.println(this.toString());
     }
     
 }

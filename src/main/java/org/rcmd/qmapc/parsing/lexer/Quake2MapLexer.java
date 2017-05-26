@@ -84,12 +84,12 @@ public class Quake2MapLexer extends Lexer {
         do {
             buf.append(this.c);
             this.consume();
-        } while (this.c != '\n');
+        } while (this.c != '\n' && this.c != Lexer.EOF);
         String completeTokenString = buf.toString();
         if(completeTokenString.startsWith("//")) {
             if(completeTokenString.startsWith("// brush ")) {       // Some quake editors like GtkRadiant add the brush ID in a comment before each brush.
                 try {
-                    int brushID = Integer.parseInt(completeTokenString.substring("// brush ".length() + 1));
+                    int brushID = Integer.parseInt(completeTokenString.substring("// brush ".length()));
                     return new Token(BRUSH_ID, "" + brushID);
                 }
                 catch(NumberFormatException e) {
@@ -97,11 +97,13 @@ public class Quake2MapLexer extends Lexer {
                 }                
             }
             else if(completeTokenString.startsWith("// entity ")) {       // Some quake editors like GtkRadiant add the entity ID in a comment before each entity.
+                System.out.println("starts with entitiy");
                 try {
-                    int entityID = Integer.parseInt(completeTokenString.substring("// entity ".length() + 1));
+                    int entityID = Integer.parseInt(completeTokenString.substring("// entity ".length()));
                     return new Token(ENTITY_ID, "" + entityID);
                 }
                 catch(NumberFormatException e) {
+                    System.out.println("starts with entitiy number format ex");
                     return new Token(COMMENT, completeTokenString);
                 }                
             }

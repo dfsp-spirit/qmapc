@@ -3,8 +3,11 @@
  */
 package org.rcmd.qmapc.parsing.lexer;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.rcmd.qmapc.Main;
@@ -16,8 +19,10 @@ import org.rcmd.qmapc.Main;
 public class Quake2MapLexerTest {
     
     Quake2MapLexer q2ml;
-    String q2Brush;
-        
+    String inputIntegerUnsigned, inputIntegerNegative, inputFloatUnsigned, inputFloatNegative, inputPoint, inputQ2Brush, inputComment, inputCommentBrushID, inputCommentEntityID;
+    Token token;
+    List<Token> tokenList;
+    
     public Quake2MapLexerTest() {        
     }
     
@@ -31,7 +36,16 @@ public class Quake2MapLexerTest {
     
     @Before
     public void setUp() {
-        q2Brush = "// brush 0\n" +
+        tokenList = new ArrayList<>();
+        inputIntegerUnsigned = "134";
+        inputIntegerNegative = "-134234234";
+        inputFloatUnsigned = "1.0034";
+        inputFloatNegative = "-21.003400";
+        inputPoint = "( 123 34 211 )";
+        inputComment = "// this is just a comment";
+        inputCommentBrushID = "// brush 23";
+        inputCommentEntityID = "// entity 3";
+        inputQ2Brush = "// brush 0\n" +
 "{\n" +
 "( 248 320 192 ) ( 248 -128 192 ) ( -136 320 192 ) spirit2dm9/floor_3 0 0 0 1.000000 1.000000 0 1 50\n" +
 "( -128 312 192 ) ( -128 312 64 ) ( -128 -136 192 ) spirit2dm9/trim_9 0 0 0 1.000000 1.000000 0 1 50\n" +
@@ -47,20 +61,96 @@ public class Quake2MapLexerTest {
         q2ml = null;
     }
 
-    /**
-     * Test of main method, of class Main.
-     */
     @org.junit.Test
-    public void testQuake2MapLexer() {
-        q2ml = new Quake2MapLexer(q2Brush);
-        Token t;
-        while (q2ml.nextToken().type != Lexer.EOF_TYPE) {
-            t = q2ml.nextToken();
-            System.out.println("Received token " + t.type + " '" + q2ml.getTokenName(t.type) + "' from text '" + t.text + "'.");
+    public void testItLexesValidIntegerUnsigned() {
+        q2ml = new Quake2MapLexer(inputIntegerUnsigned);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();            
         }
-        // Consume EOF token
-        t = q2ml.nextToken();
-        System.out.println("Received token " + t.type + " '" + q2ml.getTokenName(t.type) + "' from text '" + t.text + "'.");
+        assertEquals(1, tokenList.size());
+        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(0).type);
+    }
+    
+    @org.junit.Test
+    public void testItLexesValidIntegerNegative() {
+        q2ml = new Quake2MapLexer(inputIntegerNegative);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();            
+        }
+        assertEquals(1, tokenList.size());
+        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(0).type);
+    }
+    
+    @org.junit.Test
+    public void testItLexesValidComment() {
+        q2ml = new Quake2MapLexer(inputComment);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();            
+        }
+        assertEquals(1, tokenList.size());
+        assertEquals(Quake2MapLexer.COMMENT, tokenList.get(0).type);
+    }
+    
+    @org.junit.Test
+    public void testItLexesValidCommentWithBrushID() {
+        q2ml = new Quake2MapLexer(inputCommentBrushID);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();            
+        }
+        assertEquals(1, tokenList.size());
+        assertEquals(Quake2MapLexer.BRUSH_ID, tokenList.get(0).type);
+        assertEquals("23", tokenList.get(0).text);
+    }
+    
+    @org.junit.Test
+    public void testItLexesValidCommentWithEntityID() {
+        q2ml = new Quake2MapLexer(inputCommentEntityID);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();            
+        }
+        assertEquals(1, tokenList.size());
+        assertEquals(Quake2MapLexer.ENTITY_ID, tokenList.get(0).type);
+    }
+    
+    
+    
+            
+            
+    @org.junit.Test
+    public void testItLexesValidPoint() {
+        q2ml = new Quake2MapLexer(inputPoint);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();
+        }
+        assertEquals(5, tokenList.size());
+        assertEquals(Quake2MapLexer.ROUNDBRACKET_L, tokenList.get(0).type);
+        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(1).type);
+        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(2).type);
+        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(3).type);
+        assertEquals(Quake2MapLexer.ROUNDBRACKET_R, tokenList.get(4).type);
+    }
+    
+    @org.junit.Test
+    public void testItLexesValidQuake2Brush() {
+        q2ml = new Quake2MapLexer(inputQ2Brush);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) { 
+            tokenList.add(token);
+            token = q2ml.nextToken();
+        }
+        assertEquals(147, tokenList.size());
     }
     
 }

@@ -32,10 +32,10 @@ public class Main {
                 + "}";
 
         q2ml = new Quake2MapLexer(q2Brush);
-        Token t;
-        while (q2ml.nextToken().type != Lexer.EOF_TYPE) {
-            t = q2ml.nextToken();
-            System.out.println("Received token " + t.type + " '" + q2ml.getTokenName(t.type) + "' from text '" + t.text + "'.");
+        Token token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {            
+            System.out.println("Received token '" + token + "'.");
+            token = q2ml.nextToken();
         }
     }
 
