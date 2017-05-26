@@ -24,16 +24,18 @@ public class Quake2MapLexer extends Lexer {
     public static int DOUBLEQUOTATIONMARKS = 14;
     public static int PATH = 15;
     public static int ENTITY_ID = 16;
+    public static int CURLYBRACKET_L = 17;
+    public static int CURLYBRACKET_R = 18;
 
-    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH", "ENTITY_ID"};
+    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH", "ENTITY_ID", "CURLYBRACKET_L", "CURLYBRACKET_R"};
 
     public Quake2MapLexer(String input) {
         super(input);
     }
 
     @Override
-    public String getTokenName(int x) {
-        return Quake2MapLexer.tokenNames[x];
+    public String getTokenName(int tokenID) {
+        return Quake2MapLexer.tokenNames[tokenID];
     }
 
     public Boolean isLetter() {
@@ -52,14 +54,11 @@ public class Quake2MapLexer extends Lexer {
         return (this.c == '.');
     }
     
-    public Boolean isPathOrCommentCompatibleStartChar() {
-        return (this.c == '/');
+    
+    public Boolean isPathCompatibleFollowupChar() {
+        return (this.c == '/' || this.c == '_' || this.isDigit());
     }
     
-    public Boolean isNamePathOrCommentCompatibleFollowupChar() {
-        return (this.c == '/' || this.c == '_' || this.c == ' ' || this.c == '\t' || this.isDigit());
-    }
-
     void handleWhiteSpace() {
         while (this.c == ' ' || this.c == '\n' || this.c == '\r' || this.c == '\t') {
             this.consume();
@@ -79,13 +78,13 @@ public class Quake2MapLexer extends Lexer {
             return new Token(INTEGER, buf.toString());
         }        
     }
-
-    Token handlePathOrComment() {
+    
+    Token handleComment() {
         StringBuilder buf = new StringBuilder();
         do {
             buf.append(this.c);
             this.consume();
-        } while (this.isLetter() || this.isNamePathOrCommentCompatibleFollowupChar());
+        } while (this.c != '\n');
         String completeTokenString = buf.toString();
         if(completeTokenString.startsWith("//")) {
             if(completeTokenString.startsWith("// brush ")) {       // Some quake editors like GtkRadiant add the brush ID in a comment before each brush.
@@ -93,7 +92,7 @@ public class Quake2MapLexer extends Lexer {
                     int brushID = Integer.parseInt(completeTokenString.substring("// brush ".length() + 1));
                     return new Token(BRUSH_ID, "" + brushID);
                 }
-                catch(Exception e) {
+                catch(NumberFormatException e) {
                     return new Token(COMMENT, completeTokenString);
                 }                
             }
@@ -102,14 +101,25 @@ public class Quake2MapLexer extends Lexer {
                     int entityID = Integer.parseInt(completeTokenString.substring("// entity ".length() + 1));
                     return new Token(ENTITY_ID, "" + entityID);
                 }
-                catch(Exception e) {
+                catch(NumberFormatException e) {
                     return new Token(COMMENT, completeTokenString);
                 }                
             }
             else {
                 return new Token(COMMENT, completeTokenString);
             }
+        } else {
+            throw new Error("Hit invalid character sequence '" + completeTokenString + "', expected comment but missing second slash at start.");
         }
+        
+    }
+
+    Token handlePath() {
+        StringBuilder buf = new StringBuilder();
+        do {
+            buf.append(this.c);
+            this.consume();
+        } while (this.isLetter() || this.isPathCompatibleFollowupChar());
         return new Token(PATH, buf.toString());
     }
         
@@ -139,12 +149,20 @@ public class Quake2MapLexer extends Lexer {
                 case ')':
                     this.consume();
                     return new Token(ROUNDBRACKET_R, ")");
+                case '{':
+                    this.consume();
+                    return new Token(CURLYBRACKET_L, "{");
+                case '}':
+                    this.consume();
+                    return new Token(CURLYBRACKET_R, "}");
                 case '"':
                     this.consume();
                     return new Token(DOUBLEQUOTATIONMARKS, "\"");
+                case '/':
+                    return this.handleComment();
                 default:
-                    if (this.isLetter() || this.isPathOrCommentCompatibleStartChar()) {
-                        return this.handlePathOrComment();
+                    if (this.isLetter()) {
+                        return this.handlePath();
                     } else if(this.isDigit() || this.isDigitCompatibleStartChar()) {
                         return this.handleDigit();
                     } else {

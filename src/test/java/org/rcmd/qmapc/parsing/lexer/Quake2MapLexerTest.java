@@ -39,8 +39,7 @@ public class Quake2MapLexerTest {
 "( -136 -128 64 ) ( -136 -128 192 ) ( 248 -128 64 ) spirit2dm9/trim_9 0 0 0 1.000000 1.000000 0 1 50\n" +
 "( -192 -120 64 ) ( -192 328 64 ) ( -192 -120 192 ) spirit2dm9/trim_9 0 0 0 1.000000 1.000000 0 1 50\n" +
 "( -192 0 -96 ) ( -128 -64 -96 ) ( -192 0 32 ) spirit2dm9/trim_9 0 0 0 1.000000 1.000000 0 1 50\n" +
-"}";
-        q2ml = new Quake2MapLexer(q2Brush);
+"}";        
     }
     
     @After
@@ -52,7 +51,16 @@ public class Quake2MapLexerTest {
      * Test of main method, of class Main.
      */
     @org.junit.Test
-    public void testQuake2MapLexer() {        
+    public void testQuake2MapLexer() {
+        q2ml = new Quake2MapLexer(q2Brush);
+        Token t;
+        while (q2ml.nextToken().type != Lexer.EOF_TYPE) {
+            t = q2ml.nextToken();
+            System.out.println("Received token " + t.type + " '" + q2ml.getTokenName(t.type) + "' from text '" + t.text + "'.");
+        }
+        // Consume EOF token
+        t = q2ml.nextToken();
+        System.out.println("Received token " + t.type + " '" + q2ml.getTokenName(t.type) + "' from text '" + t.text + "'.");
     }
     
 }
