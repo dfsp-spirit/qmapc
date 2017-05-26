@@ -151,6 +151,7 @@ public class Quake2MapLexerTest {
         }
         assertEquals(1, tokenList.size());
         assertEquals(Quake2MapLexer.ENTITY_ID, tokenList.get(0).type);
+        assertEquals("3", tokenList.get(0).text);
     }
 
     @org.junit.Test
