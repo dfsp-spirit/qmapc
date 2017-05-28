@@ -65,13 +65,26 @@ public class LexerTest {
     public void testABasicBinaryLexerImplementationThrowsErrorOnInvalidInput() {
         String input = "2";
         lexer = new BinaryTestLexer(input);
+        token = lexer.nextToken();
+    }
+    
+    @org.junit.Test
+    public void testABasicBinaryLexerImplementationReturnsEOFWhenAppropriate() {
+        String input = "01";
+        lexer = new BinaryTestLexer(input);
 
         token = lexer.nextToken();
         while (token.type != Lexer.EOF_TYPE) {
             tokenList.add(token);
             token = lexer.nextToken();
         }
-
+        assertEquals(2, tokenList.size());
+        assertEquals(BinaryTestLexer.TOKEN_ZERO, tokenList.get(0).type);
+        assertEquals(BinaryTestLexer.TOKEN_ONE, tokenList.get(1).type);
+        token = lexer.nextToken();
+        assertEquals(Lexer.EOF_TYPE, token.type);
+        token = lexer.nextToken();
+        assertEquals(Lexer.EOF_TYPE, token.type);
     }
 
 }
