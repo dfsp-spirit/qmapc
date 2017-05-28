@@ -44,14 +44,16 @@ public class TokenTest {
     
     @org.junit.Test
     public void testItHasTheConstrcutorValues() {
-        token = new Token(Quake2MapLexer.COMMENT, "// Some comment.");
+        String inputText = "// Some comment.";
+        token = new Token(Quake2MapLexer.COMMENT, inputText);
         assertEquals(Quake2MapLexer.COMMENT, token.type);
-        assertEquals("// Some comment.", token.text);
+        assertEquals(inputText, token.text);
     }
     
     @org.junit.Test
     public void testItHasExpectedToStringBehaviour() {
-        token = new Token(Quake2MapLexer.COMMENT, "// Some comment.");
+        String inputText = "// Some comment.";
+        token = new Token(Quake2MapLexer.COMMENT, inputText);
         assertEquals("<'// Some comment.',COMMENT>", token.toString());
     }
 }
