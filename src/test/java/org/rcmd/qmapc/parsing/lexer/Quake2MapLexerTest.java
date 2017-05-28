@@ -191,7 +191,7 @@ public class Quake2MapLexerTest {
         }
         assertEquals(8, tokenList.size());
         assertEquals(Quake2MapLexer.DOUBLEQUOTATIONMARKS, tokenList.get(0).type);
-        assertEquals(Quake2MapLexer.PATH, tokenList.get(1).type);
+        assertEquals(Quake2MapLexer.PATH_OR_NAME, tokenList.get(1).type);
         assertEquals(Quake2MapLexer.DOUBLEQUOTATIONMARKS, tokenList.get(2).type);
         assertEquals(Quake2MapLexer.DOUBLEQUOTATIONMARKS, tokenList.get(3).type);
         assertEquals(Quake2MapLexer.INTEGER, tokenList.get(4).type);

@@ -36,12 +36,12 @@ public class Parser {
         return this.lookaheadToken(i).type;
     }
     
-    public void match(int x) {
-        if(this.lookaheadTokenType(1) == x) {
+    public void match(int tokenType) {
+        if(this.lookaheadTokenType(1) == tokenType) {
             consume();
         }
         else {
-            throw new Error("[Parser] Expected token '" + this.input.getTokenName(x) + "', but found '" + this.lookaheadTokenType(x) + "'.");
+            throw new Error("[Parser] Expected token '" + this.input.getTokenName(tokenType) + "', but found '" + this.lookaheadTokenType(tokenType) + "'.");
         }
     }
     

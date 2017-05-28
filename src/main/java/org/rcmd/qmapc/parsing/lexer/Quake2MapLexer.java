@@ -9,7 +9,7 @@ package org.rcmd.qmapc.parsing.lexer;
  */
 public class Quake2MapLexer extends Lexer {
 
-    public static int NAME = 2;
+    public static int QUOTED_STRING = 2;
     public static int COMMA = 3;
     public static int SQUAREBRACKET_L = 4;
     public static int SQUAREBRACKET_R = 5;
@@ -22,12 +22,12 @@ public class Quake2MapLexer extends Lexer {
     public static int BRUSH_ID = 12;
     public static int COMMENT = 13;
     public static int DOUBLEQUOTATIONMARKS = 14;
-    public static int PATH = 15;
+    public static int PATH_OR_NAME = 15;
     public static int ENTITY_ID = 16;
     public static int CURLYBRACKET_L = 17;
     public static int CURLYBRACKET_R = 18;
 
-    public static String[] tokenNames = {"n/a", "EOF", "NAME", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH", "ENTITY_ID", "CURLYBRACKET_L", "CURLYBRACKET_R"};
+    public static String[] tokenNames = {"n/a", "EOF", "QUOTED_STRING", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH_OR_NAME", "ENTITY_ID", "CURLYBRACKET_L", "CURLYBRACKET_R"};
 
     public Quake2MapLexer(String input) {
         super(input);
@@ -103,7 +103,6 @@ public class Quake2MapLexer extends Lexer {
                     return new Token(ENTITY_ID, "" + entityID);
                 }
                 catch(NumberFormatException e) {
-                    System.out.println("starts with entitiy number format ex");
                     return new Token(COMMENT, completeTokenString);
                 }                
             }
@@ -116,13 +115,30 @@ public class Quake2MapLexer extends Lexer {
         
     }
 
-    Token handlePath() {
+    Token handlePathOrName() {
         StringBuilder buf = new StringBuilder();
         do {
             buf.append(this.c);
             this.consume();
         } while (this.isLetter() || this.isPathCompatibleFollowupChar());
-        return new Token(PATH, buf.toString());
+        return new Token(PATH_OR_NAME, buf.toString());
+    }
+    
+    Token handleQuotedString() {
+        StringBuilder buf = new StringBuilder();
+        do {
+            buf.append(this.c);
+            this.consume();
+        } while (this.c != '"' && this.c != Lexer.EOF);
+        if(this.c == '"') {
+            buf.append(this.c);
+            this.consume();
+            return new Token(QUOTED_STRING, buf.toString());
+        }
+        else {
+            throw new Error("Hit EOF while in a quoted string. Expected closing '\"' before EOF.");
+        }
+                
     }
         
 
@@ -164,7 +180,7 @@ public class Quake2MapLexer extends Lexer {
                     return this.handleComment();
                 default:
                     if (this.isLetter()) {
-                        return this.handlePath();
+                        return this.handlePathOrName();
                     } else if(this.isDigit() || this.isDigitCompatibleStartChar()) {
                         return this.handleDigit();
                     } else {

@@ -20,7 +20,7 @@ public class Quake2MapParser extends Parser {
     public void map() {
         // TODO: implement me
         if (this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS
-                && this.lookaheadTokenType(2) == Quake2MapLexer.NAME) {
+                && this.lookaheadTokenType(2) == Quake2MapLexer.PATH_OR_NAME) {
 
         }
     }
@@ -39,14 +39,19 @@ public class Quake2MapParser extends Parser {
     
     void entityKey() {
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-        match(Quake2MapLexer.PATH);
+        match(Quake2MapLexer.PATH_OR_NAME);
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
     }
     
     void entityValueString() {
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-        match(Quake2MapLexer.PATH);
+        match(Quake2MapLexer.PATH_OR_NAME);
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+    
+    void entityLineWithValueString() {
+        entityKey();
+        entityValueString();
     }
     
     void entityValueFloat() {
@@ -55,10 +60,20 @@ public class Quake2MapParser extends Parser {
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
     }
     
+    void entityLineWithValueFloat() {
+        entityKey();
+        entityValueFloat();
+    }
+    
     void entityValueInteger() {
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
         match(Quake2MapLexer.INTEGER);
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+    
+    void entityLineWithValueInteger() {
+        entityKey();
+        entityValueInteger();
     }
     
     void entityValuePoint3DInteger() {
@@ -67,10 +82,41 @@ public class Quake2MapParser extends Parser {
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
     }
     
+    void entityLineWithValuePoint3DInteger() {
+        entityKey();
+        entityValuePoint3DInteger();
+    }
+    
     void entityValuePoint3DFloat() {
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
         point3DFloat();
         match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+    
+    void entityLineWithValuePoint3DFloat() {
+        entityKey();
+        entityValuePoint3DFloat();
+    }
+    
+    void q2BrushFaceLine() {
+        bracketedPoint3DInteger();
+        bracketedPoint3DInteger();
+        bracketedPoint3DInteger();
+        match(Quake2MapLexer.PATH_OR_NAME);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+    }
+    
+    void bracketedPoint3DInteger() {
+        match(Quake2MapLexer.ROUNDBRACKET_L);
+        point3DInteger();
+        match(Quake2MapLexer.ROUNDBRACKET_R);
     }
 
     
