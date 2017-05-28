@@ -13,23 +13,41 @@ import org.rcmd.qmapc.parsing.lexer.Token;
 public class Parser {
     
     Lexer input;
-    Token lookahead;
+    Token[] lookahead;
+    int k;  // Size of lookahead buffer
+    int p = 0;  // Current position in buffer
     
-    public Parser(Lexer input) {
+    public Parser(Lexer input, int k) {
         this.input = input;
+        this.k = k;
+        lookahead = new Token[k];
+        
+        // prime buffer
+        for(int i = 1; i <= k; i++) {
+           consume();
+        }
+    }
+    
+    public Token lookaheadToken(int i) {
+        return lookahead[(p + i - 1) % k];
+    }
+    
+    public int lookaheadTokenType(int i) {
+        return this.lookaheadToken(i).type;
     }
     
     public void match(int x) {
-        if(this.lookahead.type == x) {
+        if(this.lookaheadTokenType(1) == x) {
             consume();
         }
         else {
-            throw new Error("[Parser] Expected token '" + this.input.getTokenName(x) + "', but found '" + this.lookahead + "'.");
+            throw new Error("[Parser] Expected token '" + this.input.getTokenName(x) + "', but found '" + this.lookaheadTokenType(x) + "'.");
         }
     }
     
-    public void consume() {
-        this.lookahead = input.nextToken();
+    public final void consume() {
+        this.lookahead[p] = input.nextToken();
+        p = (p+1) % k;
     }
     
 }

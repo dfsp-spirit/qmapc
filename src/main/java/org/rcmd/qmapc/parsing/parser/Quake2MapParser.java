@@ -11,27 +11,68 @@ import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
  * @author spirit
  */
 public class Quake2MapParser extends Parser {
+
     
     public Quake2MapParser(Lexer input) {
-        super(input);
+        super(input, 10);
     }
-    
+
     public void map() {
         // TODO: implement me
-    }
-    
-    void point3D() {
-        match(Quake2MapLexer.ROUNDBRACKET_L);
-        numberInt();
-        numberInt();
-        numberInt();
-        match(Quake2MapLexer.ROUNDBRACKET_R);
-    }
-    
-    void numberInt() {
-        if(lookahead.type == Quake2MapLexer.INTEGER) {
-            match(Quake2MapLexer.INTEGER);
+        if (this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS
+                && this.lookaheadTokenType(2) == Quake2MapLexer.NAME) {
+
         }
     }
+
+    void point3DInteger() {
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+    }
     
+    void point3DFloat() {
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.FLOAT);
+    }
+    
+    void entityKey() {
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+        match(Quake2MapLexer.PATH);
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+    
+    void entityValueString() {
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+        match(Quake2MapLexer.PATH);
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+    
+    void entityValueFloat() {
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+    
+    void entityValueInteger() {
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+    
+    void entityValuePoint3DInteger() {
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+        point3DInteger();
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+    
+    void entityValuePoint3DFloat() {
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+        point3DFloat();
+        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
+    }
+
+    
+
 }
