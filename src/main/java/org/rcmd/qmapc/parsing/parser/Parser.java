@@ -41,7 +41,7 @@ public class Parser {
             consume();
         }
         else {
-            throw new IllegalArgumentException("[Parser] Expected token '" + this.input.getTokenName(tokenType) + "', but found '" + this.lookaheadTokenType(tokenType) + "'.");
+            throw new IllegalArgumentException("[Parser] Expected token '" + this.input.getTokenName(tokenType) + "', but found '" + this.input.getTokenName(this.lookaheadTokenType(1)) + "'.");
         }
     }
     
