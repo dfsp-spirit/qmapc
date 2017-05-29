@@ -43,7 +43,7 @@ public class IOUtilTest {
         String mapFileName = "spirit2dm9.map";
         String testMapResourcePath = IOUtil.getTestMap(mapFileName);        
         assertTrue("The test map resource path should not be null.", testMapResourcePath != null);
-        assertTrue("The test map resource path should end with blah", testMapResourcePath.endsWith(mapFileName));
+        assertTrue("The test map resource path should end with the requested file name.", testMapResourcePath.endsWith(mapFileName));
     }
     
     @org.junit.Test
