@@ -55,8 +55,12 @@ public class Quake2MapLexer extends Lexer {
     }
     
     
-    public Boolean isPathCompatibleFollowupChar() {
+    public Boolean isPathOrNameCompatibleFollowupChar() {
         return (this.c == '/' || this.c == '_' || this.isDigit());
+    }
+    
+    public Boolean isPathOrNameCompatibleStartChar() {
+        return (this.c == '_');
     }
     
     void handleWhiteSpace() {
@@ -120,7 +124,7 @@ public class Quake2MapLexer extends Lexer {
         do {
             buf.append(this.c);
             this.consume();
-        } while (this.isLetter() || this.isPathCompatibleFollowupChar());
+        } while (this.isLetter() || this.isPathOrNameCompatibleFollowupChar());
         return new Token(PATH_OR_NAME, buf.toString());
     }
     
@@ -179,7 +183,7 @@ public class Quake2MapLexer extends Lexer {
                 case '/':
                     return this.handleComment();
                 default:
-                    if (this.isLetter()) {
+                    if (this.isLetter() || this.isPathOrNameCompatibleStartChar()) {
                         return this.handlePathOrName();
                     } else if(this.isDigit() || this.isDigitCompatibleStartChar()) {
                         return this.handleDigit();

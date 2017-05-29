@@ -8,6 +8,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.rcmd.qmapc.Main;
+import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
+import org.rcmd.qmapc.parsing.lexer.Token;
 
 /**
  *
@@ -15,6 +17,9 @@ import org.rcmd.qmapc.Main;
  */
 public class Quake2MapParserTest {
     
+    Quake2MapLexer q2ml;
+    Quake2MapParser q2mp;
+    Token token;
     
     public Quake2MapParserTest() {
     }
@@ -33,16 +38,32 @@ public class Quake2MapParserTest {
     
     @After
     public void tearDown() {
+        q2ml = null;
+        q2mp = null;
     }
 
-    /**
-     * Test of main method, of class Main.
-     */
     @org.junit.Test
-    public void testQuake2MapParser() {        
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+    public void testItProperlyParsesAnEntityLineWithAStringValue() {        
+        String input = "\"classname\" \"worldspawn\"";
+        
+        q2ml = new Quake2MapLexer(input);
+        q2mp = new Quake2MapParser(q2ml);
+        
+        q2mp.entityLineWithValueString();
     }
+    
+    @org.junit.Test
+    public void testItProperlyParsesAnEntityLineWithAPoint3DFloatValue() {        
+        String input = "\"_color\" \"1.0 0.8 0.8\"";
+        
+        q2ml = new Quake2MapLexer(input);
+        q2mp = new Quake2MapParser(q2ml);
+        
+        q2mp.entityLineWithValuePoint3DFloat();
+    }
+    
+    
+    
     
 }
 
