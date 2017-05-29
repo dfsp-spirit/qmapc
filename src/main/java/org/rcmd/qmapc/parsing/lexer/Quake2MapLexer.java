@@ -114,7 +114,7 @@ public class Quake2MapLexer extends Lexer {
                 return new Token(COMMENT, completeTokenString);
             }
         } else {
-            throw new Error("Hit invalid character sequence '" + completeTokenString + "', expected comment but missing second slash at start.");
+            throw new IllegalArgumentException("Hit invalid character sequence '" + completeTokenString + "', expected comment but missing second slash at start.");
         }
         
     }
@@ -140,7 +140,7 @@ public class Quake2MapLexer extends Lexer {
             return new Token(QUOTED_STRING, buf.toString());
         }
         else {
-            throw new Error("Hit EOF while in a quoted string. Expected closing '\"' before EOF.");
+            throw new IllegalArgumentException("Hit EOF while in a quoted string. Expected closing '\"' before EOF.");
         }
                 
     }
@@ -188,7 +188,7 @@ public class Quake2MapLexer extends Lexer {
                     } else if(this.isDigit() || this.isDigitCompatibleStartChar()) {
                         return this.handleDigit();
                     } else {
-                        throw new Error("Hit invalid character '" + this.c + "'.");
+                        throw new IllegalArgumentException("Hit invalid character '" + this.c + "'.");
                     }
 
             }

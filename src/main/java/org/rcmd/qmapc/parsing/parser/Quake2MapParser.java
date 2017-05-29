@@ -113,6 +113,20 @@ public class Quake2MapParser extends Parser {
         match(Quake2MapLexer.INTEGER);
     }
     
+    void q2BrushWithBrushIDComment() {
+        match(Quake2MapLexer.BRUSH_ID);
+        q2BrushWithoutBrushIDComment();
+    }
+    
+    void q2BrushWithoutBrushIDComment() {        
+        match(Quake2MapLexer.CURLYBRACKET_L);
+        q2BrushFaceLine();
+        while(this.lookaheadTokenType(1) == Quake2MapLexer.ROUNDBRACKET_L) {
+            q2BrushFaceLine();
+        }
+        match(Quake2MapLexer.CURLYBRACKET_R);
+    }
+    
     void bracketedPoint3DInteger() {
         match(Quake2MapLexer.ROUNDBRACKET_L);
         point3DInteger();

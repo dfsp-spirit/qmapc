@@ -37,7 +37,7 @@ public abstract class Lexer {
             this.consume();
         }
         else {
-            throw new Error("[Lexer] Expected '" + expected + "', but found '" + this.c + "'.");
+            throw new IllegalArgumentException("[Lexer] Expected '" + expected + "', but found '" + this.c + "'.");
         }
     }
     
