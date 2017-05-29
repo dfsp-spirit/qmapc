@@ -27,8 +27,8 @@ public class IOUtil {
         }
     }
     
-    public static String getTestMap() {
-        return IOUtil.class.getResource("/org/rcmd/qmapc/parsing/resources/maps/spirit2dm9.map").getFile();
+    public static String getTestMap(String mapNameIncludingFileExtension) {
+        return IOUtil.class.getResource("/org/rcmd/qmapc/maps/" + mapNameIncludingFileExtension).getFile();
     }
 
 }
