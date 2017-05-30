@@ -48,7 +48,7 @@ public class Quake2MapParserTest {
         q2ml = new Quake2MapLexer(input);
         q2mp = new Quake2MapParser(q2ml);
         
-        q2mp.entityLineWithValueString();
+        q2mp.anyEntityKeyValueLine();
     }
     
     @org.junit.Test
@@ -58,7 +58,17 @@ public class Quake2MapParserTest {
         q2ml = new Quake2MapLexer(input);
         q2mp = new Quake2MapParser(q2ml);
         
-        q2mp.entityLineWithValuePoint3DFloat();
+        q2mp.anyEntityKeyValueLine();
+    }
+    
+    @org.junit.Test
+    public void testItProperlyParsesAnEntityLineWithAStringIncludingSpecialChars() {        
+        String input = "\"message\" \"This is a string with ;(){} many special . chars and 234234 digits.s\"";
+        
+        q2ml = new Quake2MapLexer(input);
+        q2mp = new Quake2MapParser(q2ml);
+        
+        q2mp.anyEntityKeyValueLine();
     }
     
     @org.junit.Test

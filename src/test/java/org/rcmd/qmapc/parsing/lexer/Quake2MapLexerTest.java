@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -18,7 +18,7 @@ import org.junit.BeforeClass;
 public class Quake2MapLexerTest {
 
     Quake2MapLexer q2ml;
-    String inputIntegerUnsigned, inputIntegerNegative, inputFloatUnsigned, inputFloatNegative, inputPoint, inputQ2Brush, inputComment, inputCommentBrushID, inputCommentEntityID, inputQ2EntityKeyValueLine, inputQ2Entity;
+    String inputIntegerUnsigned, inputIntegerNegative, inputFloatUnsigned, inputFloatNegative, inputPoint, inputQ2Brush, inputComment, inputCommentBrushID, inputCommentEntityID, inputQ2EntityKeyValueLine, inputQ2EntityWithoutBrush, inputQuotedString;
     Token token;
     List<Token> tokenList;
 
@@ -44,6 +44,7 @@ public class Quake2MapLexerTest {
         inputComment = "// this is just a comment";
         inputCommentBrushID = "// brush 23";
         inputCommentEntityID = "// entity 3";
+        inputQuotedString = "\"I am a string with (){}; many special characters 1.0 and even an int 5 .\"";
         inputQ2Brush = "// brush 0\n"
                 + "{\n"
                 + "( 248 320 192 ) ( 248 -128 192 ) ( -136 320 192 ) spirit2dm9/floor_3 0 0 0 1.000000 1.000000 0 1 50\n"
@@ -54,7 +55,7 @@ public class Quake2MapLexerTest {
                 + "( -192 0 -96 ) ( -128 -64 -96 ) ( -192 0 32 ) spirit2dm9/trim_9 0 0 0 1.000000 1.000000 0 1 50\n"
                 + "}";
         inputQ2EntityKeyValueLine = "\"origin\" \"24 -344 40\"\n";
-        inputQ2Entity = "// entity 81\n"
+        inputQ2EntityWithoutBrush = "// entity 81\n"
                 + "{\n"
                 + "\"angle\" \"90\"\n"
                 + "\"origin\" \"24 -344 40\"\n"
@@ -189,26 +190,44 @@ public class Quake2MapLexerTest {
             tokenList.add(token);
             token = q2ml.nextToken();
         }
-        assertEquals(8, tokenList.size());
-        assertEquals(Quake2MapLexer.DOUBLEQUOTATIONMARKS, tokenList.get(0).type);
-        assertEquals(Quake2MapLexer.PATH_OR_NAME, tokenList.get(1).type);
-        assertEquals(Quake2MapLexer.DOUBLEQUOTATIONMARKS, tokenList.get(2).type);
-        assertEquals(Quake2MapLexer.DOUBLEQUOTATIONMARKS, tokenList.get(3).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(4).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(5).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(6).type);
-        assertEquals(Quake2MapLexer.DOUBLEQUOTATIONMARKS, tokenList.get(7).type);
+        assertEquals(2, tokenList.size());
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(0).type);
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(1).type);
     }
     
     @org.junit.Test
-    public void testItLexesValidQuake2Entity() {
-        q2ml = new Quake2MapLexer(inputQ2Entity);
+    public void testItLexesValidQuake2SimpleEntityWithoutIncludedBrush() {
+        q2ml = new Quake2MapLexer(inputQ2EntityWithoutBrush);
         token = q2ml.nextToken();
         while (token.type != Lexer.EOF_TYPE) {
             tokenList.add(token);
             token = q2ml.nextToken();
         }
-        assertEquals(23, tokenList.size());
+        assertEquals(9, tokenList.size());
+        assertEquals(Quake2MapLexer.ENTITY_ID, tokenList.get(0).type);
+        assertEquals(Quake2MapLexer.CURLYBRACKET_L, tokenList.get(1).type);
+        
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(2).type);
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(3).type);
+        
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(4).type);
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(5).type);
+        
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(6).type);
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(7).type);
+        
+        assertEquals(Quake2MapLexer.CURLYBRACKET_R, tokenList.get(8).type);
     }
-
+    
+    @org.junit.Test
+    public void testItLexesValidQuotedString() {
+        q2ml = new Quake2MapLexer(inputQuotedString);
+        token = q2ml.nextToken();
+        while (token.type != Lexer.EOF_TYPE) {
+            tokenList.add(token);
+            token = q2ml.nextToken();
+        }
+        assertEquals(1, tokenList.size());
+        assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(0).type);
+    }    
 }

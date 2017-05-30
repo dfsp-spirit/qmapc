@@ -178,8 +178,7 @@ public class Quake2MapLexer extends Lexer {
                     this.consume();
                     return new Token(CURLYBRACKET_R, "}");
                 case '"':
-                    this.consume();
-                    return new Token(DOUBLEQUOTATIONMARKS, "\"");
+                    return this.handleQuotedString();
                 case '/':
                     return this.handleComment();
                 default:

@@ -153,8 +153,13 @@ public class Quake2MapParser extends Parser {
 
         match(Quake2MapLexer.CURLYBRACKET_R);
     }
-
+    
     void anyEntityKeyValueLine() {
+        match(Quake2MapLexer.QUOTED_STRING);
+        match(Quake2MapLexer.QUOTED_STRING);
+    }
+
+    void anyEntityKeyValueLineOld() {
         
         entityKey();
         
