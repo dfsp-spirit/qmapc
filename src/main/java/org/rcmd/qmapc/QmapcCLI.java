@@ -1,5 +1,6 @@
 package org.rcmd.qmapc;
 
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +52,7 @@ public class QmapcCLI {
 
     }
 
-    public void parse() {
+    public void parseInto(Properties settings) {
         CommandLineParser parser = new DefaultParser();
 
         CommandLine cmd = null;
