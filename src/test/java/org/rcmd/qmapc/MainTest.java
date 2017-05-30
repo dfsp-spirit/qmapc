@@ -38,10 +38,10 @@ public class MainTest {
     /**
      * Test of main method, of class Main.
      */
-    @org.junit.Test
-    public void testMain() {
-        String[] args = new String[]{"Quake map here"};
-        Main.main(args);
-    }
+//    @org.junit.Test
+//    public void testMain() {
+//        String[] args = new String[]{"Quake map here"};
+//        Main.main(args);
+//    }
     
 }
