@@ -19,6 +19,8 @@ public class Main {
         
         Properties settings = getDefaultSettings();
         new QmapcCLI(args).parseInto(settings);
+        
+        System.out.println("Main: file is " + settings.getProperty("inputFile"));
     }
     
     private static Properties getDefaultSettings() {

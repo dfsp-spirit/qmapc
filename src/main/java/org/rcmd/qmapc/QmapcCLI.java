@@ -72,6 +72,7 @@ public class QmapcCLI {
                 String inputMapFile = cmd.getOptionValue("i");
                 LOGGER.log(Level.INFO, "Using input map file '" + inputMapFile + "'.");
                 // TODO: do something with this info: add to our app settings.
+                settings.put("inputFile", inputMapFile);
             } else {
                 LOGGER.log(Level.SEVERE, "Missing required i option");
                 help(1);
