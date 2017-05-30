@@ -10,7 +10,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -19,7 +18,11 @@ import static org.junit.Assert.assertEquals;
 public class Quake2MapLexerTest {
 
     Quake2MapLexer q2ml;
-    String inputIntegerUnsigned, inputIntegerNegative, inputFloatUnsigned, inputFloatNegative, inputPoint, inputQ2Brush, inputComment, inputCommentBrushID, inputCommentEntityID, inputQ2EntityKeyValueLine, inputQ2SimpleEntityWithoutBrush, inputQuotedString, inputQ2ComplexEntityWithBrush;
+    String inputIntegerUnsigned, inputIntegerNegative, inputFloatUnsigned,
+            inputFloatNegative, inputPoint, inputQ2Brush, inputComment,
+            inputCommentBrushID, inputCommentEntityID,
+            inputQ2EntityKeyValueLine, inputQ2SimpleEntityWithoutBrush,
+            inputQuotedString, inputQ2ComplexEntityWithBrush;
     Token token;
     List<Token> tokenList;
 
@@ -248,7 +251,7 @@ public class Quake2MapLexerTest {
         assertEquals(1, tokenList.size());
         assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(0).type);
     }
-    
+
     @org.junit.Test
     public void testItLexesValidQuake2ComplexEntityWithIncludedBrush() {
         q2ml = new Quake2MapLexer(inputQ2ComplexEntityWithBrush);
@@ -269,7 +272,7 @@ public class Quake2MapLexerTest {
 
         assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(6).type);
         assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(7).type);
-        
+
         assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(8).type);
         assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(9).type);
 
@@ -278,19 +281,18 @@ public class Quake2MapLexerTest {
 
         assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(12).type);
         assertEquals(Quake2MapLexer.QUOTED_STRING, tokenList.get(13).type);
-        
+
         assertEquals(Quake2MapLexer.BRUSH_ID, tokenList.get(14).type);
         assertEquals(Quake2MapLexer.CURLYBRACKET_L, tokenList.get(15).type);
-        
+
         assertEquals(Quake2MapLexer.ROUNDBRACKET_L, tokenList.get(16).type);
         assertEquals(Quake2MapLexer.INTEGER, tokenList.get(17).type);
         assertEquals(Quake2MapLexer.INTEGER, tokenList.get(18).type);
         assertEquals(Quake2MapLexer.INTEGER, tokenList.get(19).type);
         assertEquals(Quake2MapLexer.ROUNDBRACKET_R, tokenList.get(20).type);
-        
+
         // Skip checks for rest of the face line (and for 5 more brush face lines) here.
-        
-        assertEquals(Quake2MapLexer.CURLYBRACKET_R, tokenList.get(tokenList.size() - 2).type);                
+        assertEquals(Quake2MapLexer.CURLYBRACKET_R, tokenList.get(tokenList.size() - 2).type);
         assertEquals(Quake2MapLexer.CURLYBRACKET_R, tokenList.get(tokenList.size() - 1).type);
     }
 }
