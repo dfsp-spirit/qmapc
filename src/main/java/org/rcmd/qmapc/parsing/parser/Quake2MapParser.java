@@ -139,12 +139,12 @@ public class Quake2MapParser extends Parser {
 
     void q2EntityWithoutEntityIDComment() {
         match(Quake2MapLexer.CURLYBRACKET_L);
-        while (this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS || this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID || this.lookaheadTokenType(1) == Quake2MapLexer.ROUNDBRACKET_L) {
-            if (this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS) {
+        while (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING || this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID || this.lookaheadTokenType(1) == Quake2MapLexer.ROUNDBRACKET_L) {
+            if (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING) {
                 anyEntityKeyValueLine();
             } else if (this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID) {
                 q2BrushWithBrushIDComment();
-            } else if (this.lookaheadTokenType(1) == Quake2MapLexer.ROUNDBRACKET_L) {
+            } else if (this.lookaheadTokenType(1) == Quake2MapLexer.CURLYBRACKET_L) {
                 q2BrushWithoutBrushIDComment();
             } else {
                 throw new IllegalArgumentException("Hit invalid token '" + this.lookaheadTokenType(1) + "' while parsing an entity. Expected '\"', '(', or '/'.");
@@ -155,6 +155,7 @@ public class Quake2MapParser extends Parser {
     }
     
     void anyEntityKeyValueLine() {
+        System.out.println("any entitiy KV line");
         match(Quake2MapLexer.QUOTED_STRING);
         match(Quake2MapLexer.QUOTED_STRING);
     }

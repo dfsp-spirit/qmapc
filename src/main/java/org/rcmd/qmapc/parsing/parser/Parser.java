@@ -38,10 +38,11 @@ public class Parser {
     
     public void match(int tokenType) {
         if(this.lookaheadTokenType(1) == tokenType) {
+            System.out.println("Matched token of type '" + this.input.getTokenName(tokenType) + "'.");
             consume();
         }
         else {
-            throw new IllegalArgumentException("[Parser] Expected token '" + this.input.getTokenName(tokenType) + "', but found '" + this.input.getTokenName(this.lookaheadTokenType(1)) + "'.");
+            throw new IllegalArgumentException("[Parser] Expected token '" + this.input.getTokenName(tokenType) + "', but found '" + this.input.getTokenName(this.lookaheadTokenType(1)) + "'. Position was " + this.input.getCurrentPositionInInput() + ", last 100 chars: '" + this.input.getLastCharsUpTo(100) + "'.");
         }
     }
     

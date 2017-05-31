@@ -101,7 +101,6 @@ public class Quake2MapLexer extends Lexer {
                 }                
             }
             else if(completeTokenString.startsWith("// entity ")) {       // Some quake editors like GtkRadiant add the entity ID in a comment before each entity.
-                System.out.println("starts with entitiy");
                 try {
                     int entityID = Integer.parseInt(completeTokenString.substring("// entity ".length()));
                     return new Token(ENTITY_ID, "" + entityID);

@@ -16,6 +16,15 @@ public abstract class Lexer {
     int p = 0;      // current position in input
     char c;         // current character
     
+    public int getCurrentPositionInInput() {
+        return p;
+    }
+    
+    public String getLastCharsUpTo(int numChars) {
+        int minCharIndex = this.p - numChars;
+        minCharIndex = (minCharIndex < 0 ? 0 : minCharIndex);
+        return this.input.substring(minCharIndex, this.p);
+    }
     
     public Lexer(String input) {
         this.input = input;
