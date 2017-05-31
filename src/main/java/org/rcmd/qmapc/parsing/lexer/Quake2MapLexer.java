@@ -136,6 +136,7 @@ public class Quake2MapLexer extends Lexer {
         if(this.c == '"') {
             buf.append(this.c);
             this.consume();
+            System.out.println("found quoted string '" + buf.toString() + "'");
             return new Token(QUOTED_STRING, buf.toString());
         }
         else {

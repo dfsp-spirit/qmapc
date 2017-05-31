@@ -78,7 +78,7 @@ public class Quake2MapParser extends Parser {
 
     void q2EntityWithoutEntityIDComment() {
         match(Quake2MapLexer.CURLYBRACKET_L);
-        while (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING || this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID || this.lookaheadTokenType(1) == Quake2MapLexer.ROUNDBRACKET_L) {
+        while (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING || this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID || this.lookaheadTokenType(1) == Quake2MapLexer.CURLYBRACKET_L) {
             if (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING) {
                 anyEntityKeyValueLine();
             } else if (this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID) {
