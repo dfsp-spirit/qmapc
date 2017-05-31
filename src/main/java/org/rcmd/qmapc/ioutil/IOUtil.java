@@ -4,6 +4,7 @@
 package org.rcmd.qmapc.ioutil;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -29,6 +30,22 @@ public class IOUtil {
     
     public static String getTestMap(String mapNameIncludingFileExtension) {
         return IOUtil.class.getResource("/org/rcmd/qmapc/maps/" + mapNameIncludingFileExtension).getFile();
+    }
+    
+    
+    public static Boolean getBoolean(String s) {
+       
+        if(s.toLowerCase().equals("true")) {
+            return(true);
+        }
+        else if(s.toLowerCase().equals("false")) {
+            return(false);
+        }
+        else {
+            System.err.println("ERROR: Settings: Could not load setting '" + s + "' from settings as Boolean, invalid format.");
+            System.exit(1);
+            return(false);      // never reached
+        }
     }
 
 }
