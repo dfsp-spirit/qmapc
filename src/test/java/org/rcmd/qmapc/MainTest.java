@@ -7,14 +7,18 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 /**
  *
  * @author spirit
  */
 public class MainTest {
+    
+    @Rule
+    public final ExpectedSystemExit exit = ExpectedSystemExit.none();
     
     public MainTest() {
     }
@@ -35,13 +39,26 @@ public class MainTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of main method, of class Main.
-     */
-//    @org.junit.Test
-//    public void testMain() {
-//        String[] args = new String[]{"Quake map here"};
-//        Main.main(args);
-//    }
+    
+    @Test
+    public void testItExitsWithExitCode1WhenCalledWithoutArguments() {
+        exit.expectSystemExitWithStatus(1);
+        String[] args = new String[]{};
+        Main.main(args);
+    }
+    
+    @Test
+    public void testItExitsWithExitCode0WhenCalledWithHelpArgument() {
+        exit.expectSystemExitWithStatus(0);
+        String[] args = new String[]{"-h"};
+        Main.main(args);
+    }
+    
+    @Test
+    public void testItExitsWithExitCode0WhenCalledWithVersionArgument() {
+        exit.expectSystemExitWithStatus(0);
+        String[] args = new String[]{"-v"};
+        Main.main(args);
+    }
     
 }
