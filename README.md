@@ -32,14 +32,14 @@ Map file parser and converter for the Quake FPS games
   
 1. Download a copy of the qmapc repository as a zip archive and unzip it (or just clone the repository using git in case you have that installed). See https://github.com/dfsp-spirit/qmapc
 2. Start a terminal and change into the directory that contains your copy of the repository.
-    `cd path-to-your-download-dir`
-    `cd qmapc`
+`cd path-to-your-download-dir`
+`cd qmapc`
 3. Build the software using the supplied Maven wrapper script (this will download and install the correct Maven version in case you don't have it yet):
     * Linux, OSX, ... : `./mvnw clean package`
     * Windows: `./mvnw clean package`
 4. You can now run the jar file that has been produced and stored in the `target` directory:
-    `cd target`
-	`java -jar qmapc-<VERSION>.jar -h`
+`cd target`
+`java -jar qmapc-<VERSION>.jar -h`
 5. Optional: copy the jar file to some convenient location, maybe add that location to your PATH environment variable.
    
 
