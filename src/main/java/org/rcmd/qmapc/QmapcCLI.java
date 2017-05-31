@@ -97,11 +97,35 @@ public class QmapcCLI {
         if (cmd.hasOption("i")) {
             String inputMapFile = cmd.getOptionValue("i");
             LOGGER.log(Level.INFO, "Using input map file '" + inputMapFile + "'.");
-            // TODO: do something with this info: add to our app settings.
             settings.put("inputFile", inputMapFile);
         } else {
             LOGGER.log(Level.SEVERE, "Missing required i option");
             help(1);
+        }
+        
+        if (cmd.hasOption("o")) {
+            String outputMapFile = cmd.getOptionValue("o");
+            LOGGER.log(Level.INFO, "Using output map file '" + outputMapFile + "'.");
+            settings.put("outputFile", outputMapFile);
+        } else {
+            LOGGER.log(Level.SEVERE, "Missing required o option");
+            help(1);
+        }
+        
+        if (cmd.hasOption("f")) {
+            String inputFormat = cmd.getOptionValue("f");
+            LOGGER.log(Level.INFO, "Using input map format '" + inputFormat + "'.");
+            settings.put("inputFormat", inputFormat);
+        } else {
+            LOGGER.log(Level.INFO, "Input map format not specified, assuming '" + settings.getProperty("inputFormat") + "'.");
+        }
+        
+        if (cmd.hasOption("F")) {
+            String outputFormat = cmd.getOptionValue("F");
+            LOGGER.log(Level.INFO, "Using output map format '" + outputFormat + "'.");
+            settings.put("outputFormat", outputFormat);
+        } else {
+            LOGGER.log(Level.INFO, "Output map format not specified, assuming '" + settings.getProperty("outputFormat") + "'.");
         }
 
     }
