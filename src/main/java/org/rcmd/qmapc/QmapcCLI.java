@@ -67,6 +67,12 @@ public class QmapcCLI {
         if (cmd.hasOption("h")) {
             help(0);
         }
+        
+        if (cmd.hasOption("a")) {
+            settings.put("allowOverwrite", "true");
+        } else {
+            settings.put("allowOverwrite", "false");
+        }
 
         if (cmd.hasOption("v")) {
             System.out.println("0.01");
@@ -99,7 +105,7 @@ public class QmapcCLI {
             LOGGER.log(Level.INFO, "Using input map file '" + inputMapFile + "'.");
             settings.put("inputFile", inputMapFile);
         } else {
-            LOGGER.log(Level.SEVERE, "Missing required i option");
+            LOGGER.log(Level.SEVERE, "Missing required '-i' option: please specify an input file.");
             help(1);
         }
         
@@ -108,7 +114,7 @@ public class QmapcCLI {
             LOGGER.log(Level.INFO, "Using output map file '" + outputMapFile + "'.");
             settings.put("outputFile", outputMapFile);
         } else {
-            LOGGER.log(Level.SEVERE, "Missing required o option");
+            LOGGER.log(Level.SEVERE, "Missing required '-o' option: please specify an output file.");
             help(1);
         }
         
@@ -117,7 +123,7 @@ public class QmapcCLI {
             LOGGER.log(Level.INFO, "Using input map format '" + inputFormat + "'.");
             settings.put("inputFormat", inputFormat);
         } else {
-            LOGGER.log(Level.INFO, "Input map format not specified, assuming '" + settings.getProperty("inputFormat") + "'.");
+            LOGGER.log(Level.INFO, "Input map format not specified via '-f' option, assuming '" + settings.getProperty("inputFormat") + "'.");
         }
         
         if (cmd.hasOption("F")) {
@@ -125,7 +131,7 @@ public class QmapcCLI {
             LOGGER.log(Level.INFO, "Using output map format '" + outputFormat + "'.");
             settings.put("outputFormat", outputFormat);
         } else {
-            LOGGER.log(Level.INFO, "Output map format not specified, assuming '" + settings.getProperty("outputFormat") + "'.");
+            LOGGER.log(Level.INFO, "Output map format not specified via '-F' option, assuming '" + settings.getProperty("outputFormat") + "'.");
         }
 
     }
