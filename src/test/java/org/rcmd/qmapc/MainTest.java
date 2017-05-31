@@ -61,4 +61,11 @@ public class MainTest {
         Main.main(args);
     }
     
+    @Test
+    public void testItExitsWithExitCode0WhenCalledWithLicenseArgument() {
+        exit.expectSystemExitWithStatus(0);
+        String[] args = new String[]{"-l"};
+        Main.main(args);
+    }
+    
 }
