@@ -36,67 +36,6 @@ public class Quake2MapParser extends Parser {
         match(Quake2MapLexer.FLOAT);
     }
 
-    void entityKey() {
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-        match(Quake2MapLexer.PATH_OR_NAME);
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-    }
-
-    void entityValueString() {
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-        match(Quake2MapLexer.PATH_OR_NAME);
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-    }
-
-    void entityLineWithValueString() {
-        entityKey();
-        entityValueString();
-    }
-
-    void entityValueFloat() {
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-    }
-
-    void entityLineWithValueFloat() {
-        entityKey();
-        entityValueFloat();
-    }
-
-    void entityValueInteger() {
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-    }
-
-    void entityLineWithValueInteger() {
-        entityKey();
-        entityValueInteger();
-    }
-
-    void entityValuePoint3DInteger() {
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-        point3DInteger();
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-    }
-
-    void entityLineWithValuePoint3DInteger() {
-        entityKey();
-        entityValuePoint3DInteger();
-    }
-
-    void entityValuePoint3DFloat() {
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-        point3DFloat();
-        match(Quake2MapLexer.DOUBLEQUOTATIONMARKS);
-    }
-
-    void entityLineWithValuePoint3DFloat() {
-        entityKey();
-        entityValuePoint3DFloat();
-    }
-
     void q2BrushFaceLine() {
         bracketedPoint3DInteger();
         bracketedPoint3DInteger();
@@ -158,47 +97,5 @@ public class Quake2MapParser extends Parser {
         System.out.println("any entitiy KV line");
         match(Quake2MapLexer.QUOTED_STRING);
         match(Quake2MapLexer.QUOTED_STRING);
-    }
-
-    void anyEntityKeyValueLineOld() {
-        
-        entityKey();
-        
-        if (this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS
-                && this.lookaheadTokenType(2) == Quake2MapLexer.FLOAT
-                && this.lookaheadTokenType(3) == Quake2MapLexer.DOUBLEQUOTATIONMARKS) {
-            entityLineWithValueFloat();
-        }
-        else if(this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS
-                && this.lookaheadTokenType(2) == Quake2MapLexer.INTEGER
-                && this.lookaheadTokenType(3) == Quake2MapLexer.DOUBLEQUOTATIONMARKS) {
-            entityLineWithValueFloat();
-        }
-        else if(this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS
-                && this.lookaheadTokenType(2) == Quake2MapLexer.INTEGER
-                && this.lookaheadTokenType(3) == Quake2MapLexer.INTEGER
-                && this.lookaheadTokenType(4) == Quake2MapLexer.INTEGER
-                && this.lookaheadTokenType(5) == Quake2MapLexer.DOUBLEQUOTATIONMARKS) {
-            entityLineWithValuePoint3DInteger();
-        }
-        else if(this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS
-                && this.lookaheadTokenType(2) == Quake2MapLexer.FLOAT
-                && this.lookaheadTokenType(3) == Quake2MapLexer.FLOAT
-                && this.lookaheadTokenType(4) == Quake2MapLexer.FLOAT
-                && this.lookaheadTokenType(5) == Quake2MapLexer.DOUBLEQUOTATIONMARKS) {
-            entityLineWithValuePoint3DFloat();
-        }
-        else if(this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS
-                && this.lookaheadTokenType(2) == Quake2MapLexer.PATH_OR_NAME
-                && this.lookaheadTokenType(3) == Quake2MapLexer.DOUBLEQUOTATIONMARKS) {
-            entityLineWithValueString();
-        }
-        else if(this.lookaheadTokenType(1) == Quake2MapLexer.DOUBLEQUOTATIONMARKS   // This is a string with spaces in it. Match until next double quotationsmarks.
-                && this.lookaheadTokenType(2) == Quake2MapLexer.PATH_OR_NAME
-                && this.lookaheadTokenType(3) == Quake2MapLexer.PATH_OR_NAME) {
-            match(Quake2MapLexer.QUOTED_STRING);
-            
-        }
-    }
-
+    }    
 }
