@@ -120,6 +120,10 @@ public class QmapcCLI {
         
         if (cmd.hasOption("f")) {
             String inputFormat = cmd.getOptionValue("f");
+            if(!(inputFormat.equals("q1") || inputFormat.equals("q2") || inputFormat.equals("q3"))) {
+                LOGGER.log(Level.SEVERE, "Invalid input format.");
+                help(1);
+            }
             LOGGER.log(Level.INFO, "Using input map format '" + inputFormat + "'.");
             settings.put("inputFormat", inputFormat);
         } else {
@@ -128,6 +132,10 @@ public class QmapcCLI {
         
         if (cmd.hasOption("F")) {
             String outputFormat = cmd.getOptionValue("F");
+            if(!(outputFormat.equals("q1") || outputFormat.equals("q2") || outputFormat.equals("q3"))) {
+                LOGGER.log(Level.SEVERE, "Invalid output format.");
+                help(1);
+            }
             LOGGER.log(Level.INFO, "Using output map format '" + outputFormat + "'.");
             settings.put("outputFormat", outputFormat);
         } else {
