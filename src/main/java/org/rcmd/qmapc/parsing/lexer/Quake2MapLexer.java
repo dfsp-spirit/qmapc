@@ -75,11 +75,11 @@ public class Quake2MapLexer extends Lexer {
             buf.append(this.c);
             this.consume();
         } while (this.isDigit() || this.isDigitCompatibleFollowupChar());
-        if(buf.toString().contains(".")) {
+        if(buf.toString().contains(".")) {  // TODO: maybe try Integer.parseFloat here?
             return new Token(FLOAT, buf.toString());
         }
         else {
-            return new Token(INTEGER, buf.toString());
+            return new Token(INTEGER, buf.toString());      // TODO: maybe try Integer.parseInt here?
         }        
     }
     
@@ -88,8 +88,9 @@ public class Quake2MapLexer extends Lexer {
         do {
             buf.append(this.c);
             this.consume();
-        } while (this.c != '\n' && this.c != Lexer.EOF);
+        } while (this.c != '\n' && this.c != '\r' && this.c != Lexer.EOF);
         String completeTokenString = buf.toString();
+        System.out.println("handleComment: found token string " + completeTokenString);
         if(completeTokenString.startsWith("//")) {
             if(completeTokenString.startsWith("// brush ")) {       // Some quake editors like GtkRadiant add the brush ID in a comment before each brush.
                 try {
