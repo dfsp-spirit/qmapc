@@ -38,7 +38,6 @@ public class Parser {
     
     public void match(int tokenType) {
         if(this.lookaheadTokenType(1) == tokenType) {
-            System.out.println("Matched token of type '" + this.input.getTokenName(tokenType) + "'.");
             consume();
         }
         else {

@@ -90,7 +90,6 @@ public class Quake2MapLexer extends Lexer {
             this.consume();
         } while (this.c != '\n' && this.c != '\r' && this.c != Lexer.EOF);
         String completeTokenString = buf.toString();
-        System.out.println("handleComment: found token string " + completeTokenString);
         if(completeTokenString.startsWith("//")) {
             if(completeTokenString.startsWith("// brush ")) {       // Some quake editors like GtkRadiant add the brush ID in a comment before each brush.
                 try {
@@ -137,7 +136,6 @@ public class Quake2MapLexer extends Lexer {
         if(this.c == '"') {
             buf.append(this.c);
             this.consume();
-            System.out.println("found quoted string '" + buf.toString() + "'");
             return new Token(QUOTED_STRING, buf.toString());
         }
         else {

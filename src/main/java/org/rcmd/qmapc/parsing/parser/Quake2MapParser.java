@@ -94,7 +94,6 @@ public class Quake2MapParser extends Parser {
     }
     
     void anyEntityKeyValueLine() {
-        System.out.println("any entitiy KV line");
         match(Quake2MapLexer.QUOTED_STRING);
         match(Quake2MapLexer.QUOTED_STRING);
     }    
