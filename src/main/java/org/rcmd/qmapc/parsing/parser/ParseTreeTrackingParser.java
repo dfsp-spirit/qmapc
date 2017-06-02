@@ -4,6 +4,7 @@
 package org.rcmd.qmapc.parsing.parser;
 
 import org.rcmd.qmapc.ir.parsetree.ParseTree;
+import org.rcmd.qmapc.ir.parsetree.RuleNode;
 import org.rcmd.qmapc.parsing.lexer.Lexer;
 
 /**
@@ -18,6 +19,7 @@ public class ParseTreeTrackingParser extends Parser {
 
     public ParseTreeTrackingParser(Lexer input, int lookaheadBufferSize) {
         super(input, lookaheadBufferSize);
+        currentNode = new RuleNode("start");
     }
     
     @Override

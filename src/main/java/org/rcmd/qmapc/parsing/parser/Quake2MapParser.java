@@ -22,17 +22,18 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
 
     public void map() {
-//        ParseTree _saved = null;
-//        if(this.trackParseTree) {
-//            RuleNode r = new RuleNode("map");
-//            if(this.root == null) {
-//                this.root = r;
-//            } else {
-//                this.currentNode.addChild(r);
-//            }
-//            _saved = currentNode;
-//            currentNode = r;
-//        }
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode("map");
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
         
         if (this.lookaheadTokenType(1) == Quake2MapLexer.ENTITY_ID) {
             q2EntityWithEntityIDComment();
@@ -40,9 +41,9 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
             q2EntityWithoutEntityIDComment();
         }
         
-//        if(this.trackParseTree) {
-//            currentNode = _saved;
-//        }
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
     }
 
     void point3DInteger() {
