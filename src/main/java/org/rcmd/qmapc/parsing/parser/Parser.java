@@ -17,23 +17,23 @@ public class Parser {
     int k;  // Size of lookahead buffer
     int p = 0;  // Current position in buffer
     
-    public Parser(Lexer input, int k) {
+    public Parser(Lexer input, int lookaheadBufferSize) {
         this.input = input;
-        this.k = k;
-        lookahead = new Token[k];
+        this.k = lookaheadBufferSize;
+        lookahead = new Token[lookaheadBufferSize];
         
         // prime buffer
-        for(int i = 1; i <= k; i++) {
+        for(int i = 1; i <= lookaheadBufferSize; i++) {
            consume();
         }
     }
     
-    public Token lookaheadToken(int i) {
-        return lookahead[(p + i - 1) % k];
+    public Token lookaheadToken(int lookaheadIndex) {
+        return lookahead[(p + lookaheadIndex - 1) % k];
     }
     
-    public int lookaheadTokenType(int i) {
-        return this.lookaheadToken(i).type;
+    public int lookaheadTokenType(int lookaheadIndex) {
+        return this.lookaheadToken(lookaheadIndex).type;
     }
     
     public void match(int tokenType) {

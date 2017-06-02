@@ -3,6 +3,8 @@
  */
 package org.rcmd.qmapc.parsing.parser;
 
+import org.rcmd.qmapc.ir.parsetree.ParseTree;
+import org.rcmd.qmapc.ir.parsetree.RuleNode;
 import org.rcmd.qmapc.parsing.lexer.Lexer;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
 
@@ -10,18 +12,37 @@ import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
  *
  * @author spirit
  */
-public class Quake2MapParser extends Parser {
+public class Quake2MapParser extends ParseTreeTrackingParser {
+    
+    public Boolean trackParseTree = true;
 
     public Quake2MapParser(Lexer input) {
         super(input, 10);
+        this.trackParseTree = true;
     }
 
     public void map() {
+//        ParseTree _saved = null;
+//        if(this.trackParseTree) {
+//            RuleNode r = new RuleNode("map");
+//            if(this.root == null) {
+//                this.root = r;
+//            } else {
+//                this.currentNode.addChild(r);
+//            }
+//            _saved = currentNode;
+//            currentNode = r;
+//        }
+        
         if (this.lookaheadTokenType(1) == Quake2MapLexer.ENTITY_ID) {
             q2EntityWithEntityIDComment();
         } else {
             q2EntityWithoutEntityIDComment();
         }
+        
+//        if(this.trackParseTree) {
+//            currentNode = _saved;
+//        }
     }
 
     void point3DInteger() {
