@@ -15,7 +15,7 @@ public abstract class ParseTree {
     
     public List<ParseTree> children;
     
-    public RuleNode addChile(String value) {
+    public RuleNode addChild(String value) {
         RuleNode r = new RuleNode(value);
         addChild(r);
         return r;
