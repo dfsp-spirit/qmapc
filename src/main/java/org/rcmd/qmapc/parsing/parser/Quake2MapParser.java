@@ -14,14 +14,14 @@ import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
  */
 public class Quake2MapParser extends ParseTreeTrackingParser {
     
-    public Boolean trackParseTree = true;
+    Boolean trackParseTree = true;
 
     public Quake2MapParser(Lexer input) {
         super(input, 10);
-        this.trackParseTree = true;
     }
 
     public void map() {
+
         ParseTree _saved = null;
         if(this.trackParseTree) {
             RuleNode r = new RuleNode("map");
@@ -41,6 +41,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
             q2EntityWithoutEntityIDComment();
         }
         
+
         if(this.trackParseTree) {
             currentNode = _saved;
         }
