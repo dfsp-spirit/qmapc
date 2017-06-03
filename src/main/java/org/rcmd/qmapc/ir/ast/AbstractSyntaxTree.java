@@ -24,7 +24,7 @@ public class AbstractSyntaxTree {
     }
     
     public AbstractSyntaxTree(int tokenType) {
-        this.token = new Token(tokenType, "");
+        this.token = new Token(tokenType);
     }
     
     public int getNodeType() {
