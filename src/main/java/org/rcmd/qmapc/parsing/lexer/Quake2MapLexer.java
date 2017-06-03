@@ -9,28 +9,28 @@ package org.rcmd.qmapc.parsing.lexer;
  */
 public class Quake2MapLexer extends Lexer {
 
-    public static int QUOTED_STRING = 2;
-    public static int COMMA = 3;
-    public static int SQUAREBRACKET_L = 4;
-    public static int SQUAREBRACKET_R = 5;
-    public static int ROUNDBRACKET_L = 6;
-    public static int ROUNDBRACKET_R = 7;
-    public static int SLASH = 8;
-    public static int DOT = 9;
-    public static int INTEGER = 10;
-    public static int FLOAT = 11;
-    public static int BRUSH_ID = 12;
-    public static int COMMENT = 13;
-    public static int DOUBLEQUOTATIONMARKS = 14;
-    public static int PATH_OR_NAME = 15;
-    public static int ENTITY_ID = 16;
-    public static int CURLYBRACKET_L = 17;
-    public static int CURLYBRACKET_R = 18;
-    public static int DECLARE_ENTITY = 19;
-    public static int DECLARE_ENTITY_PROPERTYLINE = 20;
-    public static int DECLARE_BRUSH = 21;
-    public static int DECLARE_BRUSH_FACE = 22;
-    public static int DECLARE_MAP = 23;
+    public static final int QUOTED_STRING = 2;
+    public static final int COMMA = 3;
+    public static final int SQUAREBRACKET_L = 4;
+    public static final int SQUAREBRACKET_R = 5;
+    public static final int ROUNDBRACKET_L = 6;
+    public static final int ROUNDBRACKET_R = 7;
+    public static final int SLASH = 8;
+    public static final int DOT = 9;
+    public static final int INTEGER = 10;
+    public static final int FLOAT = 11;
+    public static final int BRUSH_ID = 12;
+    public static final int COMMENT = 13;
+    public static final int DOUBLEQUOTATIONMARKS = 14;
+    public static final int PATH_OR_NAME = 15;
+    public static final int ENTITY_ID = 16;
+    public static final int CURLYBRACKET_L = 17;
+    public static final int CURLYBRACKET_R = 18;
+    public static final int DECLARE_ENTITY = 19;
+    public static final int DECLARE_ENTITY_PROPERTYLINE = 20;
+    public static final int DECLARE_BRUSH = 21;
+    public static final int DECLARE_BRUSH_FACE = 22;
+    public static final int DECLARE_MAP = 23;
 
     public static String[] tokenNames = {"n/a", "EOF", "QUOTED_STRING", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH_OR_NAME", "ENTITY_ID", "CURLYBRACKET_L", "CURLYBRACKET_R", "DECLARE_ENTITY", "DECLARE_ENTITY_PROPERTYLINE", "DECLARE_BRUSH", "DECLARE_BRUSH_FACE", "DECLARE_MAP"};
 

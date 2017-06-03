@@ -13,7 +13,7 @@ import org.rcmd.qmapc.parsing.lexer.Token;
  */
 public class AbstractSyntaxTree {
     
-    Token token;
+    public Token token;
     List<AbstractSyntaxTree> children;
     
     public AbstractSyntaxTree(Token token) {
