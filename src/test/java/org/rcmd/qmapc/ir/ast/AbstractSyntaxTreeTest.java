@@ -5,6 +5,7 @@ package org.rcmd.qmapc.ir.ast;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
@@ -65,8 +66,9 @@ public class AbstractSyntaxTreeTest {
         AbstractSyntaxTree declareEntity3Prop1 = new AbstractSyntaxTree(new Token(Quake2MapLexer.DECLARE_ENTITY_PROPERTYLINE, "e3p1"));
         declareEntity3.addChild(declareEntity3Prop1);
         
-        
-        System.out.println(astRoot.toStringTree());
+        String treeStringRep = astRoot.toStringTree();
+        assertTrue("String representation must start with known pattern.", treeStringRep.startsWith("(<'map'"));
+        assertTrue("String representation must end with known pattern.", treeStringRep.endsWith("DECLARE_ENTITY>(<'e3p1',DECLARE_ENTITY_PROPERTYLINE>))"));
     }
     
 }
