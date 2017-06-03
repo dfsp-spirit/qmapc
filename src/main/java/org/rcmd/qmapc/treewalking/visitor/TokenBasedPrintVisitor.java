@@ -23,7 +23,7 @@ public class TokenBasedPrintVisitor {
     }
     
     void printIntNode(QuakeMapNode node) {
-        
+        System.out.println("INT");
     }
     
 }
