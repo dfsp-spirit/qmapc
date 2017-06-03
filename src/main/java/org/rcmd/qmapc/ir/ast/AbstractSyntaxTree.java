@@ -61,9 +61,9 @@ public class AbstractSyntaxTree {
         for(int i = 0; i < children.size(); i++) {
             AbstractSyntaxTree ast = (AbstractSyntaxTree)children.get(i);
             if(i > 0) {
-                sb.append(' ');
-                sb.append(ast.toStringTree());
+                sb.append(' ');                
             }
+            sb.append(ast.toStringTree());
         }
         if(!this.isNil()) {
             sb.append(")");
