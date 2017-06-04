@@ -6,7 +6,7 @@ Map file parser and converter for the Quake FPS games
 
    qmapc was written by Tim Schaefer, http://rcmd.org/ts/
    
-   For license info, see the LICENSE file.
+   qmapc is free software, published under the GPL license, version 2. For detailed license info, see the LICENSE file.
 
 ## Usage
 
@@ -26,9 +26,9 @@ Map file parser and converter for the Quake FPS games
 
    `mvn test`
   
-## Detailed info on how to build, run and use qmapc
+## Detailed info on how to build qmapc from source
 
-   These instructions are targeted at end users who want to build the qmapc JAR file from source. Thanks to the Maven wrapper script, this is very easy under Unix-like systems (Linux, OSX) and Windows. Basically all you need to know is some shell basics.
+   These instructions are targeted at end users who want to build the qmapc JAR file from source. Thanks to the Maven wrapper script, this is very easy under Unix-like systems (Linux, OSX) and Windows. All you need to know is some shell basics.
   
 1. Download a copy of the qmapc repository from GitHub as a zip archive and unzip it (or just clone the repository using git in case you have that installed). See `Contributing` below for the repo URL.
 2. Start a terminal and change into the directory that contains your copy of the repository.
