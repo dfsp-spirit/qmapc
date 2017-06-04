@@ -5,6 +5,7 @@ package org.rcmd.qmapc.parsing.parser;
 
 import org.rcmd.qmapc.ir.parsetree.ParseTree;
 import org.rcmd.qmapc.ir.parsetree.RuleNode;
+import org.rcmd.qmapc.ir.parsetree.TokenNode;
 import org.rcmd.qmapc.parsing.lexer.Lexer;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
 
@@ -14,17 +15,32 @@ import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
  */
 public class Quake2MapParser extends ParseTreeTrackingParser {
     
+    
+    public static final String RULE_MAP = "RULE_MAP";
+    public static final String RULE_ENTITY_ID = "RULE_ENTITY_ID";
+    public static final String RULE_ENTITY = "RULE_ENTITY";
+    public static final String RULE_BRUSH = "RULE_BRUSH";
+    public static final String RULE_BRUSH_FACE = "RULE_BRUSH_FACE";
+    public static final String RULE_BRUSH_FACE_POINT = "RULE_BRUSH_FACE_POINT";
+    public static final String RULE_BRUSH_FACE_TEXTURE = "RULE_BRUSH_FACE_TEXTURE";
+
+    
     Boolean trackParseTree = true;
 
     public Quake2MapParser(Lexer input) {
         super(input, 10);
     }
 
+    /**
+     * Parses a map and builds the nodes for the parse tree while doing so.
+     * This wrapper function only tracks the parse tree, it calls mapCore
+     * to do the actual parsing of the map.
+     */
     public void map() {
 
         ParseTree _saved = null;
         if(this.trackParseTree) {
-            RuleNode r = new RuleNode("map");
+            RuleNode r = new RuleNode(RULE_MAP);
             if(this.root == null) {
                 this.root = r;
                 currentNode = root;
@@ -35,16 +51,25 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
             currentNode = r;
         }
         
+        this.mapCore();        
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    /**
+     * Internal method that parses a map without parse tree tracking. 
+     * This function does not track the path node,
+     * this has to be done by a wrapping function (see map).
+     */
+    private void mapCore() {
         if (this.lookaheadTokenType(1) == Quake2MapLexer.ENTITY_ID) {
             q2EntityWithEntityIDComment();
         } else {
             q2EntityWithoutEntityIDComment();
         }
         
-
-        if(this.trackParseTree) {
-            currentNode = _saved;
-        }
     }
 
     void point3DInteger() {
@@ -94,29 +119,83 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         match(Quake2MapLexer.ROUNDBRACKET_R);
     }
 
-    void q2EntityWithEntityIDComment() {
+    public void q2EntityWithEntityIDComment() {
+        
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_ENTITY_ID);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.q2EntityWithEntityIDCommentCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
+    }
+    
+    private void q2EntityWithEntityIDCommentCore() {
         match(Quake2MapLexer.ENTITY_ID);
         q2EntityWithoutEntityIDComment();
     }
 
-    void q2EntityWithoutEntityIDComment() {
+    private void q2EntityWithoutEntityIDComment() {
+        
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_ENTITY);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.q2EntityWithoutEntityIDCommentCore();
+        
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void q2EntityWithoutEntityIDCommentCore() {
         match(Quake2MapLexer.CURLYBRACKET_L);
         while (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING || this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID || this.lookaheadTokenType(1) == Quake2MapLexer.CURLYBRACKET_L) {
-            if (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING) {
-                anyEntityKeyValueLine();
-            } else if (this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID) {
-                q2BrushWithBrushIDComment();
-            } else if (this.lookaheadTokenType(1) == Quake2MapLexer.CURLYBRACKET_L) {
-                q2BrushWithoutBrushIDComment();
-            } else {
-                throw new IllegalArgumentException("Hit invalid token '" + this.lookaheadTokenType(1) + "' while parsing an entity. Expected '\"', '(', or '/'.");
+            switch (this.lookaheadTokenType(1)) {
+                case Quake2MapLexer.QUOTED_STRING:
+                    anyEntityKeyValueLine();
+                    break;
+                case Quake2MapLexer.BRUSH_ID:
+                    q2BrushWithBrushIDComment();
+                    break;
+                case Quake2MapLexer.CURLYBRACKET_L:
+                    q2BrushWithoutBrushIDComment();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Hit invalid token '" + this.lookaheadTokenType(1) + "' while parsing an entity. Expected '\"', '(', or '/'.");
             }
         }
 
         match(Quake2MapLexer.CURLYBRACKET_R);
     }
     
-    void anyEntityKeyValueLine() {
+    
+    public void anyEntityKeyValueLine() {
+        anyEntityKeyValueLineCore();
+    }
+    
+    private void anyEntityKeyValueLineCore() {
         match(Quake2MapLexer.QUOTED_STRING);
         match(Quake2MapLexer.QUOTED_STRING);
     }    

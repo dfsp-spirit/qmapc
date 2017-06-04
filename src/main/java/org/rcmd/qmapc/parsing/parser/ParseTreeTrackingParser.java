@@ -16,10 +16,12 @@ public class ParseTreeTrackingParser extends Parser {
     
     ParseTree root;
     ParseTree currentNode;
+    
+    public static final String RULE_ROOT = "RULE_ROOT";
 
     public ParseTreeTrackingParser(Lexer input, int lookaheadBufferSize) {
         super(input, lookaheadBufferSize);
-        currentNode = new RuleNode("start");
+        currentNode = new RuleNode(RULE_ROOT);
     }
     
     @Override
