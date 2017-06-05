@@ -19,6 +19,9 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     public static final String RULE_MAP = "RULE_MAP";
     public static final String RULE_ENTITY_ID = "RULE_ENTITY_ID";
     public static final String RULE_ENTITY = "RULE_ENTITY";
+    public static final String RULE_ENTITY_PROPERTY = "RULE_ENTITY_PROPERTY";
+    public static final String RULE_ENTITY_PROPERTY_KEY = "RULE_ENTITY_PROPERTY_KEY";
+    public static final String RULE_ENTITY_PROPERTY_VALUE = "RULE_ENTITY_PROPERTY_VALUE";
     public static final String RULE_BRUSH = "RULE_BRUSH";
     public static final String RULE_BRUSH_FACE = "RULE_BRUSH_FACE";
     public static final String RULE_BRUSH_FACE_POINT = "RULE_BRUSH_FACE_POINT";
@@ -174,7 +177,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         while (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING || this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID || this.lookaheadTokenType(1) == Quake2MapLexer.CURLYBRACKET_L) {
             switch (this.lookaheadTokenType(1)) {
                 case Quake2MapLexer.QUOTED_STRING:
-                    anyEntityKeyValueLine();
+                    entityProperty();
                     break;
                 case Quake2MapLexer.BRUSH_ID:
                     q2BrushWithBrushIDComment();
@@ -191,12 +194,83 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     
-    public void anyEntityKeyValueLine() {
-        anyEntityKeyValueLineCore();
+    public void entityProperty() {
+        
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_ENTITY_PROPERTY);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.entityPropertyCore();
+        
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
     }
     
-    private void anyEntityKeyValueLineCore() {
+    public void entityPropertyKey() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_ENTITY_PROPERTY_KEY);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.entityPropertyKeyCore();
+        
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
+    }
+    
+    private void entityPropertyKeyCore() {
         match(Quake2MapLexer.QUOTED_STRING);
+    }
+    
+    private void entityPropertyCore() {
+        entityPropertyKey();
+        entityPropertyValue();
+    }
+
+    public void entityPropertyValue() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_ENTITY_PROPERTY_VALUE);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.entityPropertyValueCore();
+        
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
+    }
+    
+    private void entityPropertyValueCore() {
         match(Quake2MapLexer.QUOTED_STRING);
-    }    
+    }
 }

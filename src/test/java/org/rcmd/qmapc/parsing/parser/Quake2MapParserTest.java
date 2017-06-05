@@ -51,7 +51,7 @@ public class Quake2MapParserTest {
         q2ml = new Quake2MapLexer(input);
         q2mp = new Quake2MapParser(q2ml);
 
-        q2mp.anyEntityKeyValueLine();
+        q2mp.entityProperty();
     }
 
     @org.junit.Test
@@ -61,7 +61,7 @@ public class Quake2MapParserTest {
         q2ml = new Quake2MapLexer(input);
         q2mp = new Quake2MapParser(q2ml);
 
-        q2mp.anyEntityKeyValueLine();
+        q2mp.entityProperty();
     }
 
     @org.junit.Test
@@ -71,7 +71,7 @@ public class Quake2MapParserTest {
         q2ml = new Quake2MapLexer(input);
         q2mp = new Quake2MapParser(q2ml);
 
-        q2mp.anyEntityKeyValueLine();
+        q2mp.entityProperty();
     }
 
     @org.junit.Test
