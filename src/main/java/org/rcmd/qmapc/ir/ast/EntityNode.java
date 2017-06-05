@@ -5,7 +5,7 @@
  */
 package org.rcmd.qmapc.ir.ast;
 
-import org.rcmd.qmapc.treewalking.visitor.TokenBasedPrintVisitor;
+import org.rcmd.qmapc.treewalking.ast.visitor.TokenBasedPrintVisitor;
 
 /**
  *

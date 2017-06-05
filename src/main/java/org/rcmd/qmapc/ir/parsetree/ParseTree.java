@@ -6,6 +6,8 @@ package org.rcmd.qmapc.ir.parsetree;
 import java.util.ArrayList;
 import java.util.List;
 import org.rcmd.qmapc.parsing.lexer.Token;
+import org.rcmd.qmapc.treewalking.parsetree.IParseTreeVisitor;
+
 
 /**
  *
@@ -33,6 +35,8 @@ public abstract class ParseTree {
         }
         children.add(t);
     }
+    
+    public abstract void visit(IParseTreeVisitor visitor);
     
     
 }

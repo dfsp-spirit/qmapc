@@ -4,6 +4,7 @@
 package org.rcmd.qmapc.ir.parsetree;
 
 import org.rcmd.qmapc.parsing.lexer.Token;
+import org.rcmd.qmapc.treewalking.parsetree.IParseTreeVisitor;
 
 /**
  *
@@ -14,6 +15,11 @@ public class TokenNode extends ParseTree {
     
     public TokenNode(Token token) {
         this.token = token;
+    }
+    
+    @Override
+    public void visit(IParseTreeVisitor visitor) {
+        visitor.visit(this);
     }
     
 }

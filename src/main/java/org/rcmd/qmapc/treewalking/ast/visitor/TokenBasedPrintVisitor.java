@@ -1,7 +1,7 @@
 /*
  * This file is part of qmapc. See the LICENSE file for license information.
  */
-package org.rcmd.qmapc.treewalking.visitor;
+package org.rcmd.qmapc.treewalking.ast.visitor;
 
 import org.rcmd.qmapc.ir.ast.QuakeMapNode;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
