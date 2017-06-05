@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
 import org.rcmd.qmapc.parsing.lexer.Token;
+import org.rcmd.qmapc.treewalking.parsetree.IDepthAwareParseTreeVisitor;
 import org.rcmd.qmapc.treewalking.parsetree.IParseTreeVisitor;
 import org.rcmd.qmapc.treewalking.parsetree.NodeBasedPrintVisitor;
 
@@ -176,7 +177,7 @@ public class Quake2MapParserTest {
         q2mp.q2EntityWithEntityIDComment();
         
         // Also test parse tree and parse tree walking
-        IParseTreeVisitor visitor = new NodeBasedPrintVisitor();
+        IDepthAwareParseTreeVisitor visitor = new NodeBasedPrintVisitor();
         q2mp.root.visit(visitor);
         
 
