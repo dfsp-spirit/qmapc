@@ -5,7 +5,6 @@ package org.rcmd.qmapc.parsing.parser;
 
 import org.rcmd.qmapc.ir.parsetree.ParseTree;
 import org.rcmd.qmapc.ir.parsetree.RuleNode;
-import org.rcmd.qmapc.ir.parsetree.TokenNode;
 import org.rcmd.qmapc.parsing.lexer.Lexer;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
 
@@ -27,6 +26,16 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     public static final String RULE_BRUSH_FACE = "RULE_BRUSH_FACE";
     public static final String RULE_BRUSH_FACE_POINT = "RULE_BRUSH_FACE_POINT";
     public static final String RULE_BRUSH_FACE_TEXTURE = "RULE_BRUSH_FACE_TEXTURE";
+    public static final String RULE_TEXTURE_PATH = "RULE_TEXTURE_PATH";
+    public static final String RULE_TEXTURE_HORIZONTAL_SHIFT = "RULE_TEXTURE_HORIZONTAL_SHIFT";
+    public static final String RULE_TEXTURE_VERTICAL_SHIFT = "RULE_TEXTURE_VERTICAL_SHIFT";
+    public static final String RULE_TEXTURE_ROTATION = "RULE_TEXTURE_ROTATION";
+    public static final String RULE_TEXTURE_HORIZONTAL_SCALE = "RULE_TEXTURE_HORIZONTAL_SCALE";
+    public static final String RULE_TEXTURE_VERTICAL_SCALE = "RULE_TEXTURE_VERTICAL_SCALE";
+    public static final String RULE_FACE_CONTENT_FLAGS = "RULE_FACE_CONTENT_FLAGS";
+    public static final String RULE_FACE_SURFACE_FLAGS = "RULE_FACE_SURFACE_FLAGS";
+    public static final String RULE_FACE_SURFACE_VALUE = "RULE_FACE_SURFACE_VALUE";
+    
 
     
     Boolean trackParseTree = true;
@@ -136,15 +145,21 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         bracketedPoint3DInteger();              // face point 1
         bracketedPoint3DInteger();              // face point 2
         bracketedPoint3DInteger();              // face point 3
-        match(Quake2MapLexer.PATH_OR_NAME);     // texture path
-        match(Quake2MapLexer.INTEGER);          // texture horizontal shift        
-        match(Quake2MapLexer.INTEGER);          // texture vertical shift
-        match(Quake2MapLexer.INTEGER);          // texture rotation (degrees)
-        match(Quake2MapLexer.FLOAT);            // texture horizontal scale
-        match(Quake2MapLexer.FLOAT);            // texture vertical scale
-        match(Quake2MapLexer.INTEGER);          // contents flags, optional
-        match(Quake2MapLexer.INTEGER);          // surface flags, optional
-        match(Quake2MapLexer.INTEGER);          // surface value, optional
+        texturePath();                          // texture path
+        textureHorizontalShift();               // texture horizontal shift        
+        textureVerticalShift();                 // texture vertical shift
+        textureRotation();                      // texture rotation (degrees)
+        textureHorizontalScale();            // texture horizontal scale
+        textureVerticalScale();            // texture vertical scale
+        
+
+        if (this.lookaheadTokenType(1) == Quake2MapLexer.INTEGER &&
+                this.lookaheadTokenType(2) == Quake2MapLexer.INTEGER &&
+                this.lookaheadTokenType(3) == Quake2MapLexer.INTEGER) {
+            faceContentFlags();          // contents flags, optional (this applies to the whole brush and must be identical for all of its faces)
+            faceSurfaceFlags();          // surface flags, optional (this applies to the whole brush and must be identical for all of its faces)
+            faceSurfaceValue();          // surface value, optional (this applies to the whole brush and must be identical for all of its faces)
+        }                
     }
 
     public void q2BrushWithBrushIDComment() {
@@ -166,6 +181,106 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         if(this.trackParseTree) {
             currentNode = _saved;
         }
+    }
+    
+    public void texturePath() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_TEXTURE_PATH);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.texturePathCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    public void textureHorizontalShift() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_TEXTURE_HORIZONTAL_SHIFT);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.textureHorizontalShiftCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void textureHorizontalShiftCore() {
+        match(Quake2MapLexer.INTEGER);
+    }
+    
+    public void textureVerticalShift() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_TEXTURE_VERTICAL_SHIFT);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.textureVerticalShiftCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void textureVerticalShiftCore() {
+        match(Quake2MapLexer.INTEGER);
+    }
+    
+    public void textureRotation() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_TEXTURE_ROTATION);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.textureRotationCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void textureRotationCore() {
+        match(Quake2MapLexer.INTEGER);
+    }
+    
+    private void texturePathCore() {
+        match(Quake2MapLexer.PATH_OR_NAME);
     }
     
     private void q2BrushWithBrushIDCommentCore() {
@@ -366,5 +481,130 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     
     private void entityPropertyValueCore() {
         match(Quake2MapLexer.QUOTED_STRING);
+    }
+    
+    public void textureHorizontalScale() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_TEXTURE_HORIZONTAL_SCALE);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.textureHorizontalScaleCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void textureHorizontalScaleCore() {
+        match(Quake2MapLexer.FLOAT);
+    }
+    
+    public void textureVerticalScale() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_TEXTURE_VERTICAL_SCALE);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.textureVerticalScaleCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void textureVerticalScaleCore() {
+        match(Quake2MapLexer.FLOAT);
+    }
+    
+    public void faceContentFlags() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_FACE_CONTENT_FLAGS);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.faceContentFlagsCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void faceContentFlagsCore() {
+        match(Quake2MapLexer.INTEGER);
+    }
+    
+    public void faceSurfaceFlags() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_FACE_SURFACE_FLAGS);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.faceSurfaceFlagsCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void faceSurfaceFlagsCore() {
+        match(Quake2MapLexer.INTEGER);
+    }
+    
+    public void faceSurfaceValue() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_FACE_SURFACE_VALUE);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.faceSurfaceValueCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void faceSurfaceValueCore() {
+        match(Quake2MapLexer.INTEGER);
     }
 }
