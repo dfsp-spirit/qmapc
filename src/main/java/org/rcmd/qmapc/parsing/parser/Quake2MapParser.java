@@ -22,6 +22,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     public static final String RULE_ENTITY_PROPERTY = "RULE_ENTITY_PROPERTY";
     public static final String RULE_ENTITY_PROPERTY_KEY = "RULE_ENTITY_PROPERTY_KEY";
     public static final String RULE_ENTITY_PROPERTY_VALUE = "RULE_ENTITY_PROPERTY_VALUE";
+    public static final String RULE_BRUSH_ID = "RULE_BRUSH_ID";
     public static final String RULE_BRUSH = "RULE_BRUSH";
     public static final String RULE_BRUSH_FACE = "RULE_BRUSH_FACE";
     public static final String RULE_BRUSH_FACE_POINT = "RULE_BRUSH_FACE_POINT";
@@ -74,8 +75,30 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         }
         
     }
+    
+    public void point3DInteger() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_BRUSH_FACE_POINT);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.point3DIntegerCore();
 
-    void point3DInteger() {
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
+    }
+
+    private void point3DIntegerCore() {
         match(Quake2MapLexer.INTEGER);
         match(Quake2MapLexer.INTEGER);
         match(Quake2MapLexer.INTEGER);
@@ -87,36 +110,107 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         match(Quake2MapLexer.FLOAT);
     }
 
-    void q2BrushFaceLine() {
-        bracketedPoint3DInteger();
-        bracketedPoint3DInteger();
-        bracketedPoint3DInteger();
-        match(Quake2MapLexer.PATH_OR_NAME);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
+    public void q2BrushFace() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_BRUSH_FACE);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.q2BrushFaceCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
+    }
+    
+    private void q2BrushFaceCore() {
+        bracketedPoint3DInteger();              // face point 1
+        bracketedPoint3DInteger();              // face point 2
+        bracketedPoint3DInteger();              // face point 3
+        match(Quake2MapLexer.PATH_OR_NAME);     // texture path
+        match(Quake2MapLexer.INTEGER);          // texture horizontal shift        
+        match(Quake2MapLexer.INTEGER);          // texture vertical shift
+        match(Quake2MapLexer.INTEGER);          // texture rotation (degrees)
+        match(Quake2MapLexer.FLOAT);            // texture horizontal scale
+        match(Quake2MapLexer.FLOAT);            // texture vertical scale
+        match(Quake2MapLexer.INTEGER);          // contents flags, optional
+        match(Quake2MapLexer.INTEGER);          // surface flags, optional
+        match(Quake2MapLexer.INTEGER);          // surface value, optional
     }
 
-    void q2BrushWithBrushIDComment() {
+    public void q2BrushWithBrushIDComment() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_BRUSH_ID);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.q2BrushWithBrushIDCommentCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void q2BrushWithBrushIDCommentCore() {
         match(Quake2MapLexer.BRUSH_ID);
         q2BrushWithoutBrushIDComment();
     }
 
-    void q2BrushWithoutBrushIDComment() {
+    
+    public void q2BrushWithoutBrushIDComment() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_BRUSH);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.q2BrushWithoutBrushIDCommentCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+    }
+    
+    private void q2BrushWithoutBrushIDCommentCore() {
         match(Quake2MapLexer.CURLYBRACKET_L);
-        q2BrushFaceLine();
+        q2BrushFace();
         while (this.lookaheadTokenType(1) == Quake2MapLexer.ROUNDBRACKET_L) {
-            q2BrushFaceLine();
+            q2BrushFace();
         }
         match(Quake2MapLexer.CURLYBRACKET_R);
     }
 
-    void bracketedPoint3DInteger() {
+    
+    public void bracketedPoint3DInteger() {
+        // No need for another rule here
+        bracketedPoint3DIntegerCore();
+    }
+    
+    private void bracketedPoint3DIntegerCore() {
         match(Quake2MapLexer.ROUNDBRACKET_L);
         point3DInteger();
         match(Quake2MapLexer.ROUNDBRACKET_R);
