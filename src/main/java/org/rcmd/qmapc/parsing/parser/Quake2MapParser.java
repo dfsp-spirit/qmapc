@@ -39,9 +39,15 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
 
     
     Boolean trackParseTree = true;
+    public int numEntities;
+    public int numBrushes;
+    public int numFaces;
 
     public Quake2MapParser(Lexer input) {
         super(input, 10);
+        numEntities = 0;
+        numBrushes = 0;
+        numFaces = 0;
     }
 
     /**
@@ -142,6 +148,9 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void q2BrushFaceCore() {
+        
+        this.numFaces++;
+        
         bracketedPoint3DInteger();              // face point 1
         bracketedPoint3DInteger();              // face point 2
         bracketedPoint3DInteger();              // face point 3
@@ -311,6 +320,9 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void q2BrushWithoutBrushIDCommentCore() {
+        
+        this.numBrushes++;
+        
         match(Quake2MapLexer.CURLYBRACKET_L);
         q2BrushFace();
         while (this.lookaheadTokenType(1) == Quake2MapLexer.ROUNDBRACKET_L) {
@@ -382,6 +394,9 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void q2EntityWithoutEntityIDCommentCore() {
+        
+        this.numEntities++;
+        
         match(Quake2MapLexer.CURLYBRACKET_L);
         while (this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING || this.lookaheadTokenType(1) == Quake2MapLexer.BRUSH_ID || this.lookaheadTokenType(1) == Quake2MapLexer.CURLYBRACKET_L) {
             switch (this.lookaheadTokenType(1)) {

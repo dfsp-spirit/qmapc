@@ -179,6 +179,9 @@ public class Quake2MapParserTest {
         // Also test parse tree and parse tree walking
         IDepthAwareParseTreeVisitor visitor = new NodeBasedPrintVisitor();
         q2mp.root.visit(visitor);
+        System.out.println(q2mp.numEntities + " entities");
+        System.out.println(q2mp.numBrushes + " brushes");
+        System.out.println(q2mp.numFaces + " faces");
         
 
     }
