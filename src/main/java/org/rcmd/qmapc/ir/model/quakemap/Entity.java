@@ -34,4 +34,20 @@ public class Entity {
         return (maxUsedID + 1);
     }
     
+    public List<Brush> getBrushes() {
+        return this.brushes;
+    }
+    
+    public Boolean addBrush(Brush b) {
+        return this.brushes.add(b);
+    }
+    
+    public List<EntityProperty> getEntityProperties() {
+        return this.entityProperties;
+    }
+    
+    public Boolean addEntityProperty(EntityProperty p) {
+        return this.entityProperties.add(p);
+    }
+    
 }
