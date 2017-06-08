@@ -3,7 +3,7 @@
  */
 package org.rcmd.qmapc.ir.translation;
 
-import java.util.logging.Level;
+import org.rcmd.qmapc.ir.model.quakemap.Level;
 import org.rcmd.qmapc.ir.model.quakemap.Brush;
 import org.rcmd.qmapc.ir.model.quakemap.Entity;
 

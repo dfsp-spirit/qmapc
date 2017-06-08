@@ -3,7 +3,7 @@
  */
 package org.rcmd.qmapc.ir.translation;
 
-import java.util.logging.Level;
+import org.rcmd.qmapc.ir.model.quakemap.Level;
 import org.rcmd.qmapc.ir.model.basic.Point3DInteger;
 import org.rcmd.qmapc.ir.model.quakemap.Brush;
 import org.rcmd.qmapc.ir.model.quakemap.Entity;
@@ -46,7 +46,9 @@ public class Quake1MapGenerator extends CommonQuakeMapGenerator implements IQuak
     @Override
     public String genLevel(Level l) {
         StringBuilder sb = new StringBuilder();
-        
+        for(Entity e : l.getEntities()) {
+            sb.append(genEntity(e));
+        }
         return sb.toString();
     }
     
