@@ -4,7 +4,7 @@
 package org.rcmd.qmapc.ir.model.basic;
 
 /**
- * A point in 3D space.
+ * A point in 3D space. Used in origin of entities and for coordinates of plane points of brushes.
  * @author spirit
  */
 public class Point3DInteger {
