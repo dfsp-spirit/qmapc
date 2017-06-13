@@ -185,8 +185,8 @@ public class Quake2MapParserTest {
 
     }
 
-    //@org.junit.Test
-    public void testPatch() {
+    @org.junit.Test
+    public void testItProperlyParsesAPatchMesh() {
         String input = "// entity 10\n"
                 + "{\n"
                 + "\"type\" \"patchCapped\"\n"
@@ -296,5 +296,9 @@ public class Quake2MapParserTest {
                 + "}\n"
                 + "}\n"
                 + "}";
+        q2ml = new Quake2MapLexer(input);
+        q2mp = new Quake2MapParser(q2ml);
+
+        q2mp.q2EntityWithEntityIDComment();
     }
 }

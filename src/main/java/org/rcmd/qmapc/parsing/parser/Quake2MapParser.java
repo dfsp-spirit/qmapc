@@ -201,7 +201,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     private void q3PatchDefCore() {
         
         this.numPatchMeshes++;
-        match(Quake2MapLexer.QUOTED_STRING);
+        texturePath();
         match(Quake2MapLexer.CURLYBRACKET_L);
         texturePath();
         bracketedPoint5DInteger();
@@ -209,7 +209,8 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         q3PatchMeshCoords();
         q3PatchMeshCoords();
         q3PatchMeshCoords();
-        match(Quake2MapLexer.ROUNDBRACKET_R);                
+        match(Quake2MapLexer.ROUNDBRACKET_R);
+        match(Quake2MapLexer.CURLYBRACKET_R);
     }
     
     public void q3PatchMeshCoords() {
@@ -420,7 +421,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         
         match(Quake2MapLexer.CURLYBRACKET_L);
         
-        if(this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING) {
+        if(this.lookaheadTokenType(1) == Quake2MapLexer.PATH_OR_NAME) {
             q3PatchDef();
         }
         
