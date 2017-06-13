@@ -35,6 +35,9 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     public static final String RULE_FACE_CONTENT_FLAGS = "RULE_FACE_CONTENT_FLAGS";
     public static final String RULE_FACE_SURFACE_FLAGS = "RULE_FACE_SURFACE_FLAGS";
     public static final String RULE_FACE_SURFACE_VALUE = "RULE_FACE_SURFACE_VALUE";
+    public static final String RULE_BRUSH_PATCHDEF = "RULE_BRUSH_PATCHDEF";
+    public static final String RULE_PATCHMESH_POINT = "RULE_PATCHMESH_POINT";
+    public static final String RULE_BRUSH_PATCHMESH_COORDS = "RULE_BRUSH_PATCHMESH_COORDS";
     
 
     
@@ -42,12 +45,14 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     public int numEntities;
     public int numBrushes;
     public int numFaces;
+    public int numPatchMeshes;
 
     public Quake2MapParser(Lexer input) {
         super(input, 10);
         numEntities = 0;
         numBrushes = 0;
         numFaces = 0;
+        numPatchMeshes = 0;
     }
 
     /**
@@ -112,6 +117,36 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         }
         
     }
+    
+    public void point5DInteger() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_PATCHMESH_POINT);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.point5DIntegerCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
+    }
+    
+    private void point5DIntegerCore() {
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.INTEGER);
+    }
 
     private void point3DIntegerCore() {
         match(Quake2MapLexer.INTEGER);
@@ -123,6 +158,28 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         match(Quake2MapLexer.FLOAT);
         match(Quake2MapLexer.FLOAT);
         match(Quake2MapLexer.FLOAT);
+    }
+    
+    public void q3PatchDef() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_BRUSH_PATCHDEF);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
+        }
+        
+        this.q3PatchDefCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
     }
 
     public void q2BrushFace() {
@@ -143,8 +200,51 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
 
         if(this.trackParseTree) {
             currentNode = _saved;
+        }        
+    }
+    
+    private void q3PatchDefCore() {
+        
+        this.numPatchMeshes++;
+        match(Quake2MapLexer.QUOTED_STRING);
+        match(Quake2MapLexer.CURLYBRACKET_L);
+        texturePath();
+        bracketedPoint5DInteger();
+        match(Quake2MapLexer.ROUNDBRACKET_L);
+        q3PatchMeshCoords();
+        q3PatchMeshCoords();
+        q3PatchMeshCoords();
+        match(Quake2MapLexer.ROUNDBRACKET_R);                
+    }
+    
+    public void q3PatchMeshCoords() {
+        ParseTree _saved = null;
+        if(this.trackParseTree) {
+            RuleNode r = new RuleNode(RULE_BRUSH_PATCHMESH_COORDS);
+            if(this.root == null) {
+                this.root = r;
+                currentNode = root;
+            } else {
+                this.currentNode.addChild(r);
+            }
+            _saved = currentNode;
+            currentNode = r;
         }
         
+        this.q3PatchMeshCoordsCore();
+
+        if(this.trackParseTree) {
+            currentNode = _saved;
+        }
+        
+    }
+    
+    private void q3PatchMeshCoordsCore() {
+        match(Quake2MapLexer.ROUNDBRACKET_L);
+        bracketedPoint5DInteger();
+        bracketedPoint5DInteger();
+        bracketedPoint5DInteger();
+        match(Quake2MapLexer.ROUNDBRACKET_R);
     }
     
     private void q2BrushFaceCore() {
@@ -324,7 +424,11 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         this.numBrushes++;
         
         match(Quake2MapLexer.CURLYBRACKET_L);
-        q2BrushFace();
+        
+        if(this.lookaheadTokenType(1) == Quake2MapLexer.QUOTED_STRING) {
+            q3PatchDef();
+        }
+        
         while (this.lookaheadTokenType(1) == Quake2MapLexer.ROUNDBRACKET_L) {
             q2BrushFace();
         }
@@ -340,6 +444,17 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     private void bracketedPoint3DIntegerCore() {
         match(Quake2MapLexer.ROUNDBRACKET_L);
         point3DInteger();
+        match(Quake2MapLexer.ROUNDBRACKET_R);
+    }
+    
+    public void bracketedPoint5DInteger() {
+        // No need for another rule here
+        bracketedPoint5DIntegerCore();
+    }
+    
+    private void bracketedPoint5DIntegerCore() {
+        match(Quake2MapLexer.ROUNDBRACKET_L);
+        point5DInteger();
         match(Quake2MapLexer.ROUNDBRACKET_R);
     }
 
