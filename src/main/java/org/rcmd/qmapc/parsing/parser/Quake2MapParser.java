@@ -118,7 +118,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         
     }
     
-    public void point5DInteger() {
+    public void point5DFloat() {
         ParseTree _saved = null;
         if(this.trackParseTree) {
             RuleNode r = new RuleNode(RULE_PATCHMESH_POINT);
@@ -132,7 +132,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
             currentNode = r;
         }
         
-        this.point5DIntegerCore();
+        this.point5DFloatCore();
 
         if(this.trackParseTree) {
             currentNode = _saved;
@@ -140,12 +140,12 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         
     }
     
-    private void point5DIntegerCore() {
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
+    private void point5DFloatCore() {
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.FLOAT);
     }
 
     private void point3DIntegerCore() {
@@ -454,7 +454,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     
     private void bracketedPoint5DIntegerCore() {
         match(Quake2MapLexer.ROUNDBRACKET_L);
-        point5DInteger();
+        point5DFloat();
         match(Quake2MapLexer.ROUNDBRACKET_R);
     }
 
