@@ -31,8 +31,9 @@ public class Quake2MapLexer extends Lexer {
     public static final int DECLARE_BRUSH = 21;
     public static final int DECLARE_BRUSH_FACE = 22;
     public static final int DECLARE_MAP = 23;
+    public static final int NUMBER = 24;
 
-    public static String[] tokenNames = {"n/a", "EOF", "QUOTED_STRING", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH_OR_NAME", "ENTITY_ID", "CURLYBRACKET_L", "CURLYBRACKET_R", "DECLARE_ENTITY", "DECLARE_ENTITY_PROPERTYLINE", "DECLARE_BRUSH", "DECLARE_BRUSH_FACE", "DECLARE_MAP"};
+    public static String[] tokenNames = {"n/a", "EOF", "QUOTED_STRING", "COMMA", "SQUAREBRACKET_L", "SQUAREBRACKET_R", "ROUNDBRACKET_L", "ROUNDBRACKET_R", "SLASH", "DOT", "INTEGER", "FLOAT", "BRUSH_ID", "COMMENT", "DOUBLEQUOTATIONMARKS", "PATH_OR_NAME", "ENTITY_ID", "CURLYBRACKET_L", "CURLYBRACKET_R", "DECLARE_ENTITY", "DECLARE_ENTITY_PROPERTYLINE", "DECLARE_BRUSH", "DECLARE_BRUSH_FACE", "DECLARE_MAP", "NUMBER"};
 
     public Quake2MapLexer(String input) {
         super(input);
@@ -80,12 +81,7 @@ public class Quake2MapLexer extends Lexer {
             buf.append(this.c);
             this.consume();
         } while (this.isDigit() || this.isDigitCompatibleFollowupChar());
-        if(buf.toString().contains(".")) {  // TODO: maybe try Integer.parseFloat here?
-            return new Token(FLOAT, buf.toString());
-        }
-        else {
-            return new Token(INTEGER, buf.toString());      // TODO: maybe try Integer.parseInt here?
-        }        
+        return new Token(NUMBER, buf.toString());
     }
     
     Token handleComment() {

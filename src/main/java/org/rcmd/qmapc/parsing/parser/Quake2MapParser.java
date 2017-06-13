@@ -110,7 +110,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
             currentNode = r;
         }
         
-        this.point3DIntegerCore();
+        this.point3DCore();
 
         if(this.trackParseTree) {
             currentNode = _saved;
@@ -118,7 +118,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         
     }
     
-    public void point5DFloat() {
+    public void point5D() {
         ParseTree _saved = null;
         if(this.trackParseTree) {
             RuleNode r = new RuleNode(RULE_PATCHMESH_POINT);
@@ -132,7 +132,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
             currentNode = r;
         }
         
-        this.point5DFloatCore();
+        this.point5DCore();
 
         if(this.trackParseTree) {
             currentNode = _saved;
@@ -140,25 +140,20 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         
     }
     
-    private void point5DFloatCore() {
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.FLOAT);
+    private void point5DCore() {
+        match(Quake2MapLexer.NUMBER);
+        match(Quake2MapLexer.NUMBER);
+        match(Quake2MapLexer.NUMBER);
+        match(Quake2MapLexer.NUMBER);
+        match(Quake2MapLexer.NUMBER);
     }
 
-    private void point3DIntegerCore() {
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
-        match(Quake2MapLexer.INTEGER);
+    private void point3DCore() {
+        match(Quake2MapLexer.NUMBER);
+        match(Quake2MapLexer.NUMBER);
+        match(Quake2MapLexer.NUMBER);
     }
-
-    void point3DFloat() {
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.FLOAT);
-        match(Quake2MapLexer.FLOAT);
-    }
+    
     
     public void q3PatchDef() {
         ParseTree _saved = null;
@@ -262,9 +257,9 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
         textureVerticalScale();            // texture vertical scale
         
 
-        if (this.lookaheadTokenType(1) == Quake2MapLexer.INTEGER &&
-                this.lookaheadTokenType(2) == Quake2MapLexer.INTEGER &&
-                this.lookaheadTokenType(3) == Quake2MapLexer.INTEGER) {
+        if (this.lookaheadTokenType(1) == Quake2MapLexer.NUMBER &&
+                this.lookaheadTokenType(2) == Quake2MapLexer.NUMBER &&
+                this.lookaheadTokenType(3) == Quake2MapLexer.NUMBER) {
             faceContentFlags();          // contents flags, optional (this applies to the whole brush and must be identical for all of its faces)
             faceSurfaceFlags();          // surface flags, optional (this applies to the whole brush and must be identical for all of its faces)
             faceSurfaceValue();          // surface value, optional (this applies to the whole brush and must be identical for all of its faces)
@@ -335,7 +330,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void textureHorizontalShiftCore() {
-        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.NUMBER);
     }
     
     public void textureVerticalShift() {
@@ -360,7 +355,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void textureVerticalShiftCore() {
-        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.NUMBER);
     }
     
     public void textureRotation() {
@@ -385,7 +380,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void textureRotationCore() {
-        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.NUMBER);
     }
     
     private void texturePathCore() {
@@ -454,7 +449,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     
     private void bracketedPoint5DIntegerCore() {
         match(Quake2MapLexer.ROUNDBRACKET_L);
-        point5DFloat();
+        point5D();
         match(Quake2MapLexer.ROUNDBRACKET_R);
     }
 
@@ -635,7 +630,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void textureHorizontalScaleCore() {
-        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.NUMBER);
     }
     
     public void textureVerticalScale() {
@@ -660,7 +655,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void textureVerticalScaleCore() {
-        match(Quake2MapLexer.FLOAT);
+        match(Quake2MapLexer.NUMBER);
     }
     
     public void faceContentFlags() {
@@ -685,7 +680,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void faceContentFlagsCore() {
-        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.NUMBER);
     }
     
     public void faceSurfaceFlags() {
@@ -710,7 +705,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void faceSurfaceFlagsCore() {
-        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.NUMBER);
     }
     
     public void faceSurfaceValue() {
@@ -735,6 +730,6 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     }
     
     private void faceSurfaceValueCore() {
-        match(Quake2MapLexer.INTEGER);
+        match(Quake2MapLexer.NUMBER);
     }
 }

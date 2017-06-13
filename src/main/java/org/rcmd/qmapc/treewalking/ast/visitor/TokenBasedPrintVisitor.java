@@ -14,16 +14,16 @@ public class TokenBasedPrintVisitor {
     
     public void print(QuakeMapNode node) {
         switch(node.token.type) {
-            case Quake2MapLexer.INTEGER:
-                printIntNode(node);
+            case Quake2MapLexer.NUMBER:
+                printNumberNode(node);
                 break;
             default:
                 System.out.println("Token type " + node.token.type + " not handled yet.");
         }        
     }
     
-    void printIntNode(QuakeMapNode node) {
-        System.out.println("INT");
+    void printNumberNode(QuakeMapNode node) {
+        System.out.println("NUMBER");
     }
     
 }

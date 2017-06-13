@@ -99,7 +99,7 @@ public class Quake2MapLexerTest {
             token = q2ml.nextToken();
         }
         assertEquals(1, tokenList.size());
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(0).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(0).type);
     }
 
     @org.junit.Test
@@ -111,7 +111,7 @@ public class Quake2MapLexerTest {
             token = q2ml.nextToken();
         }
         assertEquals(1, tokenList.size());
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(0).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(0).type);
     }
 
     @org.junit.Test
@@ -123,7 +123,7 @@ public class Quake2MapLexerTest {
             token = q2ml.nextToken();
         }
         assertEquals(1, tokenList.size());
-        assertEquals(Quake2MapLexer.FLOAT, tokenList.get(0).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(0).type);
     }
 
     @org.junit.Test
@@ -135,7 +135,7 @@ public class Quake2MapLexerTest {
             token = q2ml.nextToken();
         }
         assertEquals(1, tokenList.size());
-        assertEquals(Quake2MapLexer.FLOAT, tokenList.get(0).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(0).type);
     }
 
     @org.junit.Test
@@ -186,9 +186,9 @@ public class Quake2MapLexerTest {
         }
         assertEquals(5, tokenList.size());
         assertEquals(Quake2MapLexer.ROUNDBRACKET_L, tokenList.get(0).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(1).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(2).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(3).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(1).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(2).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(3).type);
         assertEquals(Quake2MapLexer.ROUNDBRACKET_R, tokenList.get(4).type);
     }
 
@@ -286,9 +286,9 @@ public class Quake2MapLexerTest {
         assertEquals(Quake2MapLexer.CURLYBRACKET_L, tokenList.get(15).type);
 
         assertEquals(Quake2MapLexer.ROUNDBRACKET_L, tokenList.get(16).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(17).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(18).type);
-        assertEquals(Quake2MapLexer.INTEGER, tokenList.get(19).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(17).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(18).type);
+        assertEquals(Quake2MapLexer.NUMBER, tokenList.get(19).type);
         assertEquals(Quake2MapLexer.ROUNDBRACKET_R, tokenList.get(20).type);
 
         // Skip checks for rest of the face line (and for 5 more brush face lines) here.
