@@ -14,7 +14,7 @@ import org.rcmd.qmapc.parsing.parser.Quake2MapParser;
 
 
 /**
- *
+ * Main class, its main method should be run when the program is executed.
  * @author spirit
  */
 public class Main {
@@ -22,6 +22,7 @@ public class Main {
     private static final Logger LOGGER = Logger.getLogger(QmapcCLI.class.getName());
 
     /**
+     * Main method of the application.
      * @param args the command line arguments
      */
     public static void main(String[] args) {  
