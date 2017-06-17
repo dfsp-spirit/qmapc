@@ -13,4 +13,12 @@ public interface INodeStats {
     
     public int getNumRuleNodes();
     
+    public int getNumBrushNodes();
+    
+    public int getNumEntityNodes();
+    
+    public int getNumFaceNodes();
+    
+    public int getNumPatchMeshNodes();
+    
 }
