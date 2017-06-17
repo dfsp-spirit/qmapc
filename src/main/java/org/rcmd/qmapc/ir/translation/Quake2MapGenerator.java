@@ -10,11 +10,11 @@ import org.rcmd.qmapc.ir.model.quakemap.PatchMesh;
  * CommonQuakeMapGenerator.
  * @author spirit
  */
-public class Quake1MapGenerator extends CommonQuakeMapGenerator implements IQuakeMapGenerator {
+public class Quake2MapGenerator extends CommonQuakeMapGenerator implements IQuakeMapGenerator {
     
     @Override
     public String genPatchMesh(PatchMesh p) {
-        return "";      // There is no patch mesh support in Quake 1, so just skip this.
+        return "";      // There is no patch mesh support in Quake 2, so just skip this.
     }
     
 }
