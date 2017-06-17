@@ -5,10 +5,13 @@ package org.rcmd.qmapc.ir.translation;
 
 import org.rcmd.qmapc.ir.model.quakemap.Level;
 import org.rcmd.qmapc.ir.model.basic.Point3DInteger;
+import org.rcmd.qmapc.ir.model.basic.Point5DFloat;
+import org.rcmd.qmapc.ir.model.basic.Point5DTriple;
 import org.rcmd.qmapc.ir.model.quakemap.Brush;
 import org.rcmd.qmapc.ir.model.quakemap.Entity;
 import org.rcmd.qmapc.ir.model.quakemap.EntityProperty;
 import org.rcmd.qmapc.ir.model.quakemap.Face;
+import org.rcmd.qmapc.ir.model.quakemap.PatchMesh;
 
 /**
  *
@@ -65,5 +68,50 @@ public class Quake1MapGenerator extends CommonQuakeMapGenerator implements IQuak
         sb.append(f.textureVerticalScale).append("\n");
         return sb.toString();
     }        
+
+    @Override
+    public String genPatchMesh(PatchMesh p) {
+        //return "";      // There is no patch mesh support in Quake 1, so just skip this.
+        StringBuilder sb = new StringBuilder();
+        sb.append(p.type).append("\n");
+        sb.append("{").append("\n");
+        sb.append(p.texturePath).append("\n");
+        sb.append("(").append("\n");
+        for(Point5DTriple pt : p.coordLines) {
+            sb.append(genPatchCoordLine(pt));
+        }        
+        sb.append(")").append("\n");
+        sb.append("}").append("\n");
+        return sb.toString();
+        
+    }
+    
+    private String genPatchCoordLine(Point5DTriple pt) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("( ");
+        sb.append(genBracketedPoint5D(pt.point1));
+        sb.append(genBracketedPoint5D(pt.point2));
+        sb.append(genBracketedPoint5D(pt.point3));
+        sb.append(" )\n");
+        return sb.toString();
+    }
+    
+    private String genBracketedPoint5D(Point5DFloat p) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("( ");
+        sb.append(genPoint5D(p));
+        sb.append(" )");
+        return sb.toString();        
+    }
+    
+    private String genPoint5D(Point5DFloat p) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(p.c1).append(" ");
+        sb.append(p.c2).append(" ");
+        sb.append(p.c3).append(" ");
+        sb.append(p.c4).append(" ");
+        sb.append(p.c5);
+        return sb.toString();        
+    }
     
 }
