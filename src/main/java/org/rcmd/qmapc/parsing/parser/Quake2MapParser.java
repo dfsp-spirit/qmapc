@@ -201,6 +201,7 @@ public class Quake2MapParser extends ParseTreeTrackingParser {
     private void q3PatchDefCore() {
         
         this.numPatchMeshes++;
+        
         texturePath();
         match(Quake2MapLexer.CURLYBRACKET_L);
         texturePath();
