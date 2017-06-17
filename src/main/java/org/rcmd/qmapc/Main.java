@@ -61,6 +61,11 @@ public class Main {
         settings.setProperty("inputFormat", "q2");
         settings.setProperty("outputFormat", "q1");
         settings.setProperty("allowOverwrite", "false");
+        settings.setProperty("outputBrushScaleX", "1.0");
+        settings.setProperty("outputBrushScaleY", "1.0");
+        settings.setProperty("outputBrushScaleZ", "1.0");
+        settings.setProperty("outputTextureScaleVertical", "1.0");
+        settings.setProperty("outputTextureScaleHorizontal", "1.0");
         return settings;
     }
 

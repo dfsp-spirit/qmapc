@@ -50,6 +50,18 @@ public class QmapcCLI {
                 .hasArg()
                 .argName("FORMAT")
                 .build());
+        options.addOption(Option.builder("b")
+                .longOpt("brush-scale")
+                .desc("scale brushes by FACTOR (float, e.g., 1.5)")
+                .hasArg()
+                .argName("FACTOR")
+                .build());
+        options.addOption(Option.builder("t")
+                .longOpt("texture-scale")
+                .desc("scale textures by FACTOR (float, e.g., 1.5)")
+                .hasArg()
+                .argName("FACTOR")
+                .build());
 
     }
 
@@ -140,6 +152,33 @@ public class QmapcCLI {
             settings.put("outputFormat", outputFormat);
         } else {
             LOGGER.log(Level.INFO, "Output map format not specified via '-F' option, assuming '" + settings.getProperty("outputFormat") + "'.");
+        }
+        
+        if (cmd.hasOption("b")) {
+            Float brushScale = Float.parseFloat(cmd.getOptionValue("b"));
+            if(!(brushScale > 0f)) {
+                LOGGER.log(Level.SEVERE, "Invalid brush scale, must be > 0.");
+                help(1);
+            }
+            LOGGER.log(Level.INFO, "Using brush scale '" + brushScale + "'.");
+            settings.put("outputBrushScaleX", brushScale.toString());
+            settings.put("outputBrushScaleY", brushScale.toString());
+            settings.put("outputBrushScaleZ", brushScale.toString());
+        } else {
+            LOGGER.log(Level.INFO, "Brush scale not specified via '-b' option, assuming '" + settings.getProperty("outputBrushScaleX") + "'.");
+        }
+        
+        if (cmd.hasOption("t")) {
+            Float textureScale = Float.parseFloat(cmd.getOptionValue("t"));
+            if(!(textureScale > 0f)) {
+                LOGGER.log(Level.SEVERE, "Invalid texture scale, must be > 0.");
+                help(1);
+            }
+            LOGGER.log(Level.INFO, "Using texture scale '" + textureScale + "'.");
+            settings.put("outputTextureScaleVertical", textureScale.toString());
+            settings.put("outputTextureScaleHorizontal", textureScale.toString());
+        } else {
+            LOGGER.log(Level.INFO, "Texture scale not specified via '-b' option, assuming '" + settings.getProperty("outputTextureScaleX") + "'.");
         }
 
     }
