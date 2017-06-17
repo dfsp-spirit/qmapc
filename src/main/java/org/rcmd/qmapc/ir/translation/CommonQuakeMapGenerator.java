@@ -10,7 +10,7 @@ import org.rcmd.qmapc.ir.model.quakemap.Brush;
 import org.rcmd.qmapc.ir.model.quakemap.Entity;
 import org.rcmd.qmapc.ir.model.quakemap.EntityProperty;
 import org.rcmd.qmapc.ir.model.quakemap.Face;
-import org.rcmd.qmapc.ir.model.quakemap.Level;
+import org.rcmd.qmapc.ir.model.quakemap.QuakeMapModel;
 import org.rcmd.qmapc.ir.model.quakemap.PatchMesh;
 
 /**
@@ -63,7 +63,7 @@ public class CommonQuakeMapGenerator implements IQuakeMapGenerator {
     }
     
     @Override
-    public String genLevel(Level l) {
+    public String genLevel(QuakeMapModel l) {
         StringBuilder sb = new StringBuilder();
         for(Entity e : l.getEntities()) {
             sb.append(genEntity(e));

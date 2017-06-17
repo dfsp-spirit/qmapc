@@ -7,6 +7,6 @@ package org.rcmd.qmapc.treewalking.parsetree;
  * Serves only to combine the two extended interfaces.
  * @author spirit
  */
-public interface INodeStatsVisitor extends IParseTreeVisitor, INodeStats {
+public interface IMapModelGeneratingVisitor extends IMapModelGenerator, IParseTreeVisitor {
     
 }

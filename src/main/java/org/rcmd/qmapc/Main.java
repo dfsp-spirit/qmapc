@@ -8,8 +8,12 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.rcmd.qmapc.ioutil.IOUtil;
+import org.rcmd.qmapc.ir.model.quakemap.QuakeMapModel;
+import org.rcmd.qmapc.ir.translation.Quake2MapGenerator;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
 import org.rcmd.qmapc.parsing.parser.Quake2MapParser;
+import org.rcmd.qmapc.treewalking.parsetree.IMapModelGeneratingVisitor;
+import org.rcmd.qmapc.treewalking.parsetree.ModelGeneratingVisitor;
 
 
 /**
@@ -46,9 +50,30 @@ public class Main {
         Quake2MapLexer q2ml = new Quake2MapLexer(inputMapContent);
         Quake2MapParser q2mp = new Quake2MapParser(q2ml);
         
-        System.out.println("Parsing input map '" + Settings.getInstance().getAppSettingString("inputFile") + "' of length " + inputMapContent.length() + " characters.");
-        
+        System.out.println("Parsing input map '" + Settings.getInstance().getAppSettingString("inputFile") + "' of length " + inputMapContent.length() + " characters.");        
         q2mp.map();
+        
+        System.out.println("Visiting parse tree to generate internal model.");
+        
+        IMapModelGeneratingVisitor visitor = new ModelGeneratingVisitor();
+        q2mp.root.visit(visitor);
+        
+        QuakeMapModel model = visitor.getMapModel();
+        
+        System.out.println("Generating output in format Quake 2 for IR.");
+        
+        Quake2MapGenerator q2gen = new Quake2MapGenerator();
+        String mapString = q2gen.genLevel(model);
+        
+        String outputFileName = Settings.getInstance().getAppSettingString("outputFile");
+        System.out.println("Writing output map to '" + outputFileName + "'.");
+        try {
+            IOUtil.stringToTextFile(outputFileName, mapString);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to write output to file: " + ex.getMessage());
+            System.exit(1);
+        }
         
         System.out.println("Done. Exiting.");
         System.exit(0);

@@ -12,11 +12,11 @@ import java.util.List;
  * 
  * @author spirit
  */
-public class Level {
+public class QuakeMapModel {
     
     private final List<Entity> entities;
     
-    public Level() {
+    public QuakeMapModel() {
         this.entities = new ArrayList<>();
     }
     
