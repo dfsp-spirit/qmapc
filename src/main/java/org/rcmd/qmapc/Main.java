@@ -53,20 +53,5 @@ public class Main {
         System.out.println("Done. Exiting.");
         System.exit(0);
     }
-    
-    private static Properties getDefaultSettings() {
-        Properties settings = new Properties();
-        settings.setProperty("inputFile", "mymap.map");
-        settings.setProperty("outputFile", "mymap_converted.map");
-        settings.setProperty("inputFormat", "q2");
-        settings.setProperty("outputFormat", "q1");
-        settings.setProperty("allowOverwrite", "false");
-        settings.setProperty("outputBrushScaleX", "1.0");
-        settings.setProperty("outputBrushScaleY", "1.0");
-        settings.setProperty("outputBrushScaleZ", "1.0");
-        settings.setProperty("outputTextureScaleVertical", "1.0");
-        settings.setProperty("outputTextureScaleHorizontal", "1.0");
-        return settings;
-    }
 
 }
