@@ -1,3 +1,7 @@
+/*
+ * This file is part of qmapc. See the LICENSE file for license information.
+ */
+
 package org.rcmd.qmapc;
 
 import java.util.Properties;
@@ -12,6 +16,10 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+/**
+ * Command line interface handling for qmapc.
+ * @author spirit
+ */
 public class QmapcCLI {
 
     private static final Logger LOGGER = Logger.getLogger(QmapcCLI.class.getName());
@@ -65,7 +73,7 @@ public class QmapcCLI {
 
     }
 
-    public void parseInto(Properties settings) {
+    public void parse() {
         CommandLineParser parser = new DefaultParser();
 
         CommandLine cmd = null;
@@ -81,9 +89,9 @@ public class QmapcCLI {
         }
         
         if (cmd.hasOption("a")) {
-            settings.put("allowOverwrite", "true");
+            Settings.getInstance().setAppSetting("allowOverwrite", "true");
         } else {
-            settings.put("allowOverwrite", "false");
+            Settings.getInstance().setAppSetting("allowOverwrite", "false");
         }
 
         if (cmd.hasOption("v")) {
@@ -115,7 +123,7 @@ public class QmapcCLI {
         if (cmd.hasOption("i")) {
             String inputMapFile = cmd.getOptionValue("i");
             LOGGER.log(Level.INFO, "Using input map file '" + inputMapFile + "'.");
-            settings.put("inputFile", inputMapFile);
+            Settings.getInstance().setAppSetting("inputFile", inputMapFile);
         } else {
             LOGGER.log(Level.SEVERE, "Missing required '-i' option: please specify an input file.");
             help(1);
@@ -124,7 +132,7 @@ public class QmapcCLI {
         if (cmd.hasOption("o")) {
             String outputMapFile = cmd.getOptionValue("o");
             LOGGER.log(Level.INFO, "Using output map file '" + outputMapFile + "'.");
-            settings.put("outputFile", outputMapFile);
+            Settings.getInstance().setAppSetting("outputFile", outputMapFile);
         } else {
             LOGGER.log(Level.SEVERE, "Missing required '-o' option: please specify an output file.");
             help(1);
@@ -137,9 +145,9 @@ public class QmapcCLI {
                 help(1);
             }
             LOGGER.log(Level.INFO, "Using input map format '" + inputFormat + "'.");
-            settings.put("inputFormat", inputFormat);
+            Settings.getInstance().setAppSetting("inputFormat", inputFormat);
         } else {
-            LOGGER.log(Level.INFO, "Input map format not specified via '-f' option, assuming '" + settings.getProperty("inputFormat") + "'.");
+            LOGGER.log(Level.INFO, "Input map format not specified via '-f' option, assuming '" + Settings.getInstance().getAppSettingString("inputFormat") + "'.");
         }
         
         if (cmd.hasOption("F")) {
@@ -149,9 +157,9 @@ public class QmapcCLI {
                 help(1);
             }
             LOGGER.log(Level.INFO, "Using output map format '" + outputFormat + "'.");
-            settings.put("outputFormat", outputFormat);
+            Settings.getInstance().setAppSetting("outputFormat", outputFormat);
         } else {
-            LOGGER.log(Level.INFO, "Output map format not specified via '-F' option, assuming '" + settings.getProperty("outputFormat") + "'.");
+            LOGGER.log(Level.INFO, "Output map format not specified via '-F' option, assuming '" + Settings.getInstance().getAppSettingString("outputFormat") + "'.");
         }
         
         if (cmd.hasOption("b")) {
@@ -161,11 +169,11 @@ public class QmapcCLI {
                 help(1);
             }
             LOGGER.log(Level.INFO, "Using brush scale '" + brushScale + "'.");
-            settings.put("outputBrushScaleX", brushScale.toString());
-            settings.put("outputBrushScaleY", brushScale.toString());
-            settings.put("outputBrushScaleZ", brushScale.toString());
+            Settings.getInstance().setAppSetting("outputBrushScaleX", brushScale.toString());
+            Settings.getInstance().setAppSetting("outputBrushScaleY", brushScale.toString());
+            Settings.getInstance().setAppSetting("outputBrushScaleZ", brushScale.toString());
         } else {
-            LOGGER.log(Level.INFO, "Brush scale not specified via '-b' option, assuming '" + settings.getProperty("outputBrushScaleX") + "'.");
+            LOGGER.log(Level.INFO, "Brush scale not specified via '-b' option, assuming '" +Settings.getInstance().getAppSettingString("outputBrushScaleX") + "'.");
         }
         
         if (cmd.hasOption("t")) {
@@ -175,10 +183,10 @@ public class QmapcCLI {
                 help(1);
             }
             LOGGER.log(Level.INFO, "Using texture scale '" + textureScale + "'.");
-            settings.put("outputTextureScaleVertical", textureScale.toString());
-            settings.put("outputTextureScaleHorizontal", textureScale.toString());
+            Settings.getInstance().setAppSetting("outputTextureScaleVertical", textureScale.toString());
+            Settings.getInstance().setAppSetting("outputTextureScaleHorizontal", textureScale.toString());
         } else {
-            LOGGER.log(Level.INFO, "Texture scale not specified via '-b' option, assuming '" + settings.getProperty("outputTextureScaleX") + "'.");
+            LOGGER.log(Level.INFO, "Texture scale not specified via '-b' option, assuming '" + Settings.getInstance().getAppSettingString("outputTextureScaleX") + "'.");
         }
 
     }

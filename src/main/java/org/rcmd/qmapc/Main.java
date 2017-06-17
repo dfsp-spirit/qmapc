@@ -26,27 +26,27 @@ public class Main {
      */
     public static void main(String[] args) {  
                
-        Properties settings = getDefaultSettings();
-        new QmapcCLI(args).parseInto(settings);
+        
+        new QmapcCLI(args).parse();
         
         String inputMapContent = "";
         try {
-            inputMapContent = IOUtil.readTextFileToString(settings.getProperty("inputFile"));
+            inputMapContent = IOUtil.readTextFileToString(Settings.getInstance().getAppSettingString("inputFile"));
         } catch(IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to load input map '" + settings.getProperty("inputFile") + ": '" + e.getMessage() + "'.");
+            LOGGER.log(Level.SEVERE, "Failed to load input map '" + Settings.getInstance().getAppSettingString("inputFile") + ": '" + e.getMessage() + "'.");
             System.exit(1);
         }
         
-        File outputFile = new File(settings.getProperty("outputFile"));
-        if(outputFile.exists() && !(IOUtil.getBoolean(settings.getProperty("allowOverwrite")) && outputFile.isFile()&& outputFile.canWrite())) {
-            LOGGER.log(Level.SEVERE, "Output file '" + settings.getProperty("outputFile") + "' exists. Add command line option to allow overwriting existing files and make sure it is writeable if you know what you are doing.");
+        File outputFile = new File(Settings.getInstance().getAppSettingString("outputFile"));
+        if(outputFile.exists() && !(IOUtil.getBoolean(Settings.getInstance().getAppSettingString("allowOverwrite")) && outputFile.isFile()&& outputFile.canWrite())) {
+            LOGGER.log(Level.SEVERE, "Output file '" + Settings.getInstance().getAppSettingString("outputFile") + "' exists. Add command line option to allow overwriting existing files and make sure it is writeable if you know what you are doing.");
             System.exit(1);
         }
         
         Quake2MapLexer q2ml = new Quake2MapLexer(inputMapContent);
         Quake2MapParser q2mp = new Quake2MapParser(q2ml);
         
-        System.out.println("Parsing input map '" + settings.getProperty("inputFile") + "' of length " + inputMapContent.length() + " characters.");
+        System.out.println("Parsing input map '" + Settings.getInstance().getAppSettingString("inputFile") + "' of length " + inputMapContent.length() + " characters.");
         
         q2mp.map();
         
