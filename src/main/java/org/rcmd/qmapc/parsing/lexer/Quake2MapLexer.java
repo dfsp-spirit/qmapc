@@ -4,7 +4,7 @@
 package org.rcmd.qmapc.parsing.lexer;
 
 /**
- *
+ * A lexer / tokenizer for files that use tokens included in Quake map formats.
  * @author spirit
  */
 public class Quake2MapLexer extends Lexer {
@@ -67,7 +67,7 @@ public class Quake2MapLexer extends Lexer {
     }
     
     public Boolean isPathOrNameCompatibleStartChar() {
-        return (this.c == '_');
+        return (this.c == '_' || this.c == '*' || this.c == '+');
     }
     
     void handleWhiteSpace() {
