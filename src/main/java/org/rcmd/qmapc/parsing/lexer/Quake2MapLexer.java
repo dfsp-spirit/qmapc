@@ -63,7 +63,7 @@ public class Quake2MapLexer extends Lexer {
     
     
     public Boolean isPathOrNameCompatibleFollowupChar() {
-        return (this.c == '/' || this.c == '_' || this.isDigit());
+        return (this.c == '/' || this.c == '_' || this.c == '*' || this.c == '+' || this.isDigit());
     }
     
     public Boolean isPathOrNameCompatibleStartChar() {
