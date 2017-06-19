@@ -20,9 +20,7 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
     
     private final QuakeMapModel model;
     private final Stack<RuleNode> ruleNodeStack;
-    
-    private final Entity currentEntity = null;
-    private final Brush currentBrush = null;
+       
     
     public ModelGeneratingVisitor() {
         this.model = new QuakeMapModel();
@@ -45,7 +43,7 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
             case Quake2MapParser.RULE_BRUSH_FACE:
                 break;
             case Quake2MapParser.RULE_ENTITY:
-                break;
+                return this.visitEntityRuleNode(r);
             case Quake2MapParser.RULE_BRUSH_PATCHDEF:
                 break;
             default:
@@ -67,6 +65,29 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
     @Override
     public QuakeMapModel getMapModel() {
         return this.model;
+    }
+    
+    private String visitEntityRuleNode(RuleNode r) {
+        
+        Entity e = new Entity();
+        this.model.addEntity(e);
+        
+        e.entityID = this.model.getNextFreeEntityIDInLevel();
+        // TODO: configure entity with data from children here
+        
+        for(ParseTree p : r.children) {
+            if(p instanceof TokenNode) {
+                System.out.println("visitEntityRuleNode: About to visit token node child: " + p);
+                visit((TokenNode)p);
+            }
+            else if(p instanceof RuleNode) {
+                System.out.println("visitEntityRuleNode: About to visit rule node child: " + p);
+                visit((RuleNode)p);
+            }
+        }
+        
+        
+        return r.name;
     }
     
 }

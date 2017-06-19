@@ -24,6 +24,14 @@ public class QuakeMapModel {
         return this.entities;
     }
     
+    private Entity getCurrentEntity() {
+        return this.entities.get(this.entities.size() - 1);
+    }
+    
+    private Brush getCurrentBrush() {
+        return this.getCurrentEntity().getCurrentBrush();
+    }
+    
     public int getNextFreeEntityIDInLevel() {
         int maxUsedID = 0;
         for(Entity e : this.entities) {
@@ -32,6 +40,10 @@ public class QuakeMapModel {
             }
         }
         return (maxUsedID + 1);
+    }
+    
+    public Boolean addEntity(Entity e) {
+        return this.entities.add(e);
     }
     
 }

@@ -18,6 +18,12 @@ public class Entity {
     private final List<EntityProperty> entityProperties;
     private final List<Brush> brushes;
     
+    public Entity() {
+        this.entityID = -1;
+        this.entityProperties = new ArrayList<>();
+        this.brushes = new ArrayList<>();
+    }
+    
     public Entity(int entityID) {
         this.entityID = entityID;
         this.entityProperties = new ArrayList<>();
@@ -48,6 +54,10 @@ public class Entity {
     
     public Boolean addEntityProperty(EntityProperty p) {
         return this.entityProperties.add(p);
+    }
+    
+    public Brush getCurrentBrush() {
+        return this.brushes.get(this.brushes.size() - 1);
     }
     
 }

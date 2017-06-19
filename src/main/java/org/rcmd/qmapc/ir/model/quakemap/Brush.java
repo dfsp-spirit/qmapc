@@ -17,6 +17,11 @@ public class Brush {
     public int brushID;
     private final List<Face> faces;
     
+    public Brush() {
+        this.brushID = -1;
+        faces = new ArrayList<>();
+    }
+    
     public Brush(int brushID) {
         this.brushID = brushID;
         faces = new ArrayList<>();
