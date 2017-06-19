@@ -27,7 +27,7 @@ public class NodeCountVisitor implements INodeStatsVisitor, IParseTreeVisitor, I
     public int ruleTypeAnyOtherCount = 0;
     
     @Override
-    public void visit(TokenNode t) {
+    public String visit(TokenNode t) {
         tokenNodeCount++;
         
         switch (t.token.type) {
@@ -47,10 +47,11 @@ public class NodeCountVisitor implements INodeStatsVisitor, IParseTreeVisitor, I
                 this.ruleTypeAnyOtherCount++;
                 break;
         }
+        return t.token.text;
     }
 
     @Override
-    public void visit(RuleNode r) {
+    public String visit(RuleNode r) {
         
         ruleNodeCount++;                
         
@@ -80,6 +81,8 @@ public class NodeCountVisitor implements INodeStatsVisitor, IParseTreeVisitor, I
                 visit((RuleNode)p);
             }
         }
+        
+        return r.name;
     }
 
     @Override

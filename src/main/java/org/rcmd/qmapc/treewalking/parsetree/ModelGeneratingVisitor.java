@@ -30,12 +30,13 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
     }
 
     @Override
-    public void visit(TokenNode t) {
+    public String visit(TokenNode t) {
         System.err.println("ModelGeneratingVisitor: implement me");
+        return t.token.text;
     }
 
     @Override
-    public void visit(RuleNode r) {
+    public String visit(RuleNode r) {
         ruleNodeStack.add(r);
         
         switch (r.name) {
@@ -60,6 +61,7 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
             }
         }
         System.err.println("ModelGeneratingVisitor: implement me");
+        return r.name;
     }
 
     @Override

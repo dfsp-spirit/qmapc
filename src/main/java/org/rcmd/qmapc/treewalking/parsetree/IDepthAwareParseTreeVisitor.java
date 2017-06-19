@@ -14,8 +14,8 @@ import org.rcmd.qmapc.ir.parsetree.TokenNode;
  */
 public interface IDepthAwareParseTreeVisitor extends IParseTreeVisitor {
     
-    public void visit(TokenNode t, int depth);
+    public String visit(TokenNode t, int depth);
     
-    public void visit(RuleNode r, int depth);
+    public String visit(RuleNode r, int depth);
     
 }

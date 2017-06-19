@@ -7,13 +7,13 @@ import org.rcmd.qmapc.ir.parsetree.RuleNode;
 import org.rcmd.qmapc.ir.parsetree.TokenNode;
 
 /**
- *
+ * Interface for parse tree visitors.
  * @author spirit
  */
 public interface IParseTreeVisitor {
     
-    public void visit(TokenNode t);
+    public String visit(TokenNode t);
     
-    public void visit(RuleNode r);
+    public String visit(RuleNode r);
     
 }

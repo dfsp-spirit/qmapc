@@ -15,7 +15,7 @@ import org.rcmd.qmapc.ir.parsetree.TokenNode;
 public class NodeBasedPrintVisitor implements IParseTreeVisitor, IDepthAwareParseTreeVisitor {
     
     @Override
-    public void visit(RuleNode r, int depth) {
+    public String visit(RuleNode r, int depth) {
         System.out.println(IOUtil.getSpacesOfDepth(depth) + r.name);
         System.out.println(IOUtil.getSpacesOfDepth(depth) + "(");
         for(ParseTree p : r.children) {
@@ -27,23 +27,25 @@ public class NodeBasedPrintVisitor implements IParseTreeVisitor, IDepthAwarePars
             }            
         }
         System.out.println(IOUtil.getSpacesOfDepth(depth) + ")");
+        return r.name;
     }
     
     @Override
-    public void visit(RuleNode r) {
-        visit(r, 0);
+    public String visit(RuleNode r) {
+        return visit(r, 0);
     }
     
     @Override
-    public void visit(TokenNode t) {
-        System.out.println(t.token);        
+    public String visit(TokenNode t) {
+        System.out.println(t.token);
+        return t.token.text;
     }
         
     
     @Override
-    public void visit(TokenNode t, int depth) {
+    public String visit(TokenNode t, int depth) {
         System.out.print(IOUtil.getSpacesOfDepth(depth));
-        visit(t);
+        return visit(t);
     }
     
 }
