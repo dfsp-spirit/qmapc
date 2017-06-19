@@ -22,4 +22,9 @@ public class RuleNode extends ParseTree {
         visitor.visit(this);
     }
     
+    @Override
+    public String toString() {
+        return this.name;
+    }
+    
 }

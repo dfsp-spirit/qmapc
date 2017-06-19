@@ -22,4 +22,9 @@ public class TokenNode extends ParseTree {
         visitor.visit(this);
     }
     
+    @Override
+    public String toString() {
+        return this.token.text;
+    }
+    
 }

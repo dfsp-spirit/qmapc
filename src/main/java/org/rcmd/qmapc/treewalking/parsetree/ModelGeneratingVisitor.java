@@ -29,7 +29,6 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
 
     @Override
     public String visit(TokenNode t) {
-        System.err.println("ModelGeneratingVisitor: implement me");
         return t.token.text;
     }
 
@@ -58,7 +57,6 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
                 visit((RuleNode)p);
             }
         }
-        System.err.println("ModelGeneratingVisitor: implement me");
         return r.name;
     }
 
@@ -77,11 +75,11 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
         
         for(ParseTree p : r.children) {
             if(p instanceof TokenNode) {
-                System.out.println("visitEntityRuleNode: About to visit token node child: " + p);
+                System.out.println("visitEntityRuleNode: About to visit token node child: " + ((TokenNode) p).toString());
                 visit((TokenNode)p);
             }
             else if(p instanceof RuleNode) {
-                System.out.println("visitEntityRuleNode: About to visit rule node child: " + p);
+                System.out.println("visitEntityRuleNode: About to visit rule node child: " + ((RuleNode) p).toString());
                 visit((RuleNode)p);
             }
         }
