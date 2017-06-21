@@ -123,7 +123,7 @@ public class QmapcCLI {
         if (cmd.hasOption("i")) {
             String inputMapFile = cmd.getOptionValue("i");
             LOGGER.log(Level.INFO, "Using input map file '" + inputMapFile + "'.");
-            Settings.getInstance().setAppSetting("inputFile", inputMapFile);
+            Settings.getInstance().setAppSetting(Settings.SETTING_INPUT_FILE, inputMapFile);
         } else {
             LOGGER.log(Level.SEVERE, "Missing required '-i' option: please specify an input file.");
             help(1);
@@ -132,7 +132,7 @@ public class QmapcCLI {
         if (cmd.hasOption("o")) {
             String outputMapFile = cmd.getOptionValue("o");
             LOGGER.log(Level.INFO, "Using output map file '" + outputMapFile + "'.");
-            Settings.getInstance().setAppSetting("outputFile", outputMapFile);
+            Settings.getInstance().setAppSetting(Settings.SETTING_OUTPUT_FILE, outputMapFile);
         } else {
             LOGGER.log(Level.SEVERE, "Missing required '-o' option: please specify an output file.");
             help(1);
