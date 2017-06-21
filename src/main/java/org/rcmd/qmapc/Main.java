@@ -50,23 +50,23 @@ public class Main {
         Quake2MapLexer q2ml = new Quake2MapLexer(inputMapContent);
         Quake2MapParser q2mp = new Quake2MapParser(q2ml);
         
-        System.out.println("Parsing input map '" + Settings.getInstance().getAppSettingString("inputFile") + "' of length " + inputMapContent.length() + " characters.");        
+        System.out.println(Settings.getInstance().getAppTag() + "Parsing input map '" + Settings.getInstance().getAppSettingString("inputFile") + "' of length " + inputMapContent.length() + " characters.");        
         q2mp.map();
         
-        System.out.println("Visiting parse tree to generate internal model.");
+        System.out.println(Settings.getInstance().getAppTag() + "Visiting parse tree to generate internal model.");
         
         IMapModelGeneratingVisitor visitor = new ModelGeneratingVisitor();
         q2mp.root.visit(visitor);
         
         QuakeMapModel model = visitor.getMapModel();
         
-        System.out.println("Generating output in format Quake 2 for IR.");
+        System.out.println(Settings.getInstance().getAppTag() + "Generating output in format Quake 2 for IR.");
         
         Quake2MapGenerator q2gen = new Quake2MapGenerator();
         String mapString = q2gen.genLevel(model);
         
         String outputFileName = Settings.getInstance().getAppSettingString("outputFile");
-        System.out.println("Writing output map to '" + outputFileName + "'.");
+        System.out.println(Settings.getInstance().getAppTag() + "Writing output map to '" + outputFileName + "'.");
         try {
             IOUtil.stringToTextFile(outputFileName, mapString);
         } catch (IOException ex) {
@@ -75,7 +75,7 @@ public class Main {
             System.exit(1);
         }
         
-        System.out.println("Done. Exiting.");
+        System.out.println(Settings.getInstance().getAppTag() + "Done. Exiting.");
         System.exit(0);
     }
 

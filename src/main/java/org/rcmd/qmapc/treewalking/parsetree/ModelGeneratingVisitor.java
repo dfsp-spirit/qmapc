@@ -42,6 +42,8 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
         ruleNodeStack.add(visitingRuleNode);
         
         switch (visitingRuleNode.name) {
+            case Quake2MapParser.RULE_MAP:
+                return this.visitMapRuleNode(visitingRuleNode);
             case Quake2MapParser.RULE_ENTITY:
                 return this.visitEntityRuleNode(visitingRuleNode);
             default:
@@ -54,6 +56,24 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
     @Override
     public QuakeMapModel getMapModel() {
         return this.model;
+    }
+    
+    private String visitMapRuleNode(RuleNode visitingRuleNode) {
+        TokenNode t;
+        RuleNode r;
+        for(ParseTree p : visitingRuleNode.children) {
+            if(p instanceof TokenNode) {
+                t = ((TokenNode) p);
+                System.out.println("visitMapRuleNode: About to visit token node child '" + t.toString() + "' with token '" + t.token + "'.");
+                visit((TokenNode)p);
+            }
+            else if(p instanceof RuleNode) {
+                r = ((RuleNode) p);
+                System.out.println("visitMapRuleNode: About to visit rule node child: '" + r.toString() + "' with rule '" + r.name + "'.");
+                visit((RuleNode)p);
+            }
+        }
+        return null;
     }
     
     private String visitEntityRuleNode(RuleNode visitingRuleNode) {
