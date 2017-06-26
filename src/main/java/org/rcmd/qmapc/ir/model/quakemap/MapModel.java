@@ -12,29 +12,29 @@ import java.util.List;
  * 
  * @author spirit
  */
-public class QuakeMapModel {
+public class MapModel extends QuakeObjectModel {
     
-    private final List<Entity> entities;
+    private final List<EntityModel> entities;
     
-    public QuakeMapModel() {
+    public MapModel() {
         this.entities = new ArrayList<>();
     }
     
-    public List<Entity> getEntities() {
+    public List<EntityModel> getEntities() {
         return this.entities;
     }
     
-    private Entity getCurrentEntity() {
+    private EntityModel getCurrentEntity() {
         return this.entities.get(this.entities.size() - 1);
     }
     
-    private Brush getCurrentBrush() {
+    private BrushModel getCurrentBrush() {
         return this.getCurrentEntity().getCurrentBrush();
     }
     
     public int getNextFreeEntityIDInLevel() {
         int maxUsedID = 0;
-        for(Entity e : this.entities) {
+        for(EntityModel e : this.entities) {
             if(e.entityID >= maxUsedID) {
                 maxUsedID = e.entityID;
             }
@@ -42,7 +42,7 @@ public class QuakeMapModel {
         return (maxUsedID + 1);
     }
     
-    public Boolean addEntity(Entity e) {
+    public Boolean addEntity(EntityModel e) {
         return this.entities.add(e);
     }
     

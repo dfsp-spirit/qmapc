@@ -3,7 +3,7 @@
  */
 package org.rcmd.qmapc.treewalking.parsetree;
 
-import org.rcmd.qmapc.ir.model.quakemap.QuakeMapModel;
+import org.rcmd.qmapc.ir.model.quakemap.MapModel;
 
 /**
  * Interface for generating the model of a Quake map. Used by tree walkers to
@@ -12,6 +12,6 @@ import org.rcmd.qmapc.ir.model.quakemap.QuakeMapModel;
  */
 public interface IMapModelGenerator {
     
-    public QuakeMapModel getMapModel();
+    public MapModel getMapModel();
     
 }

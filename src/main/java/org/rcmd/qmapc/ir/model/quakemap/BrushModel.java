@@ -12,26 +12,26 @@ import java.util.List;
  * 
  * @author spirit
  */
-public class Brush {
+public class BrushModel extends QuakeObjectModel {
     
     public int brushID;
-    private final List<Face> faces;
+    private final List<FaceModel> faces;
     
-    public Brush() {
+    public BrushModel() {
         this.brushID = -1;
         faces = new ArrayList<>();
     }
     
-    public Brush(int brushID) {
+    public BrushModel(int brushID) {
         this.brushID = brushID;
         faces = new ArrayList<>();
     }
     
-    public Boolean addFace(Face f) {
+    public Boolean addFace(FaceModel f) {
         return this.faces.add(f);
     }
     
-    public List<Face> getFaces() {
+    public List<FaceModel> getFaces() {
         return this.faces;
     }
     

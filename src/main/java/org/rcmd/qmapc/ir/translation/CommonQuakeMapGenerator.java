@@ -6,12 +6,12 @@ package org.rcmd.qmapc.ir.translation;
 import org.rcmd.qmapc.ir.model.basic.Point3DInteger;
 import org.rcmd.qmapc.ir.model.basic.Point5DFloat;
 import org.rcmd.qmapc.ir.model.basic.Point5DTriple;
-import org.rcmd.qmapc.ir.model.quakemap.Brush;
-import org.rcmd.qmapc.ir.model.quakemap.Entity;
-import org.rcmd.qmapc.ir.model.quakemap.EntityProperty;
-import org.rcmd.qmapc.ir.model.quakemap.Face;
-import org.rcmd.qmapc.ir.model.quakemap.QuakeMapModel;
-import org.rcmd.qmapc.ir.model.quakemap.PatchMesh;
+import org.rcmd.qmapc.ir.model.quakemap.BrushModel;
+import org.rcmd.qmapc.ir.model.quakemap.EntityModel;
+import org.rcmd.qmapc.ir.model.quakemap.EntityPropertyModel;
+import org.rcmd.qmapc.ir.model.quakemap.FaceModel;
+import org.rcmd.qmapc.ir.model.quakemap.MapModel;
+import org.rcmd.qmapc.ir.model.quakemap.PatchMeshModel;
 
 /**
  *
@@ -29,18 +29,18 @@ public class CommonQuakeMapGenerator implements IQuakeMapGenerator {
         return sb.toString();
     }
     
-    protected String genEntityProperty(EntityProperty p) {
+    protected String genEntityProperty(EntityPropertyModel p) {
         StringBuilder sb = new StringBuilder();
         sb.append("\"").append(p.key).append("\" ").append("\"").append(p.value).append("\"\n");
         return sb.toString();
     }
     
     @Override
-    public String genBrush(Brush b) {
+    public String genBrush(BrushModel b) {
         StringBuilder sb = new StringBuilder();
         sb.append("// brush ").append(b.brushID).append("\n");
         sb.append("{\n");
-        for(Face f : b.getFaces()) {
+        for(FaceModel f : b.getFaces()) {
             sb.append(genFace(f));
         }
         sb.append("}\n");
@@ -48,14 +48,14 @@ public class CommonQuakeMapGenerator implements IQuakeMapGenerator {
     }
     
     @Override
-    public String genEntity(Entity e) {
+    public String genEntity(EntityModel e) {
         StringBuilder sb = new StringBuilder();
         sb.append("// entity ").append(e.entityID).append("\n");
         sb.append("{\n");
-        for(EntityProperty p : e.getEntityProperties()) {
+        for(EntityPropertyModel p : e.getEntityProperties()) {
             sb.append(genEntityProperty(p));
         }
-        for(Brush b : e.getBrushes()) {
+        for(BrushModel b : e.getBrushes()) {
             sb.append(genBrush(b));
         }
         sb.append("}\n");        
@@ -63,15 +63,15 @@ public class CommonQuakeMapGenerator implements IQuakeMapGenerator {
     }
     
     @Override
-    public String genLevel(QuakeMapModel l) {
+    public String genLevel(MapModel l) {
         StringBuilder sb = new StringBuilder();
-        for(Entity e : l.getEntities()) {
+        for(EntityModel e : l.getEntities()) {
             sb.append(genEntity(e));
         }
         return sb.toString();
     }
     
-    protected String genFace(Face f) {
+    protected String genFace(FaceModel f) {
         StringBuilder sb = new StringBuilder();
         sb.append(genPoint3DInteger(f.point1)).append(" ");
         sb.append(genPoint3DInteger(f.point2)).append(" ");
@@ -86,7 +86,7 @@ public class CommonQuakeMapGenerator implements IQuakeMapGenerator {
     }        
 
     @Override
-    public String genPatchMesh(PatchMesh p) {
+    public String genPatchMesh(PatchMeshModel p) {
         StringBuilder sb = new StringBuilder();
         sb.append(p.type).append("\n");
         sb.append("{").append("\n");

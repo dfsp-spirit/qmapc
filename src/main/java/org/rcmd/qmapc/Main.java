@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.rcmd.qmapc.ioutil.IOUtil;
-import org.rcmd.qmapc.ir.model.quakemap.QuakeMapModel;
+import org.rcmd.qmapc.ir.model.quakemap.MapModel;
 import org.rcmd.qmapc.ir.translation.Quake2MapGenerator;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
 import org.rcmd.qmapc.parsing.parser.Quake2MapParser;
@@ -58,7 +58,7 @@ public class Main {
         IMapModelGeneratingVisitor visitor = new ModelGeneratingVisitor();
         q2mp.root.visit(visitor);
         
-        QuakeMapModel model = visitor.getMapModel();
+        MapModel model = visitor.getMapModel();
         
         System.out.println(Settings.getInstance().getAppTag() + "Generating output in format Quake 2 for IR.");
         

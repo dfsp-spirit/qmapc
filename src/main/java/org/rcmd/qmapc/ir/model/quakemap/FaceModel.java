@@ -9,7 +9,7 @@ import org.rcmd.qmapc.ir.model.basic.Point3DInteger;
  * Model for a face. At least 4 faces are required to define a brush.
  * @author spirit
  */
-public class Face {
+public class FaceModel extends QuakeObjectModel {
     
     public Point3DInteger point1;
     public Point3DInteger point2;
@@ -24,7 +24,7 @@ public class Face {
     public int surfaceFlags;
     public int surfaceValue;
     
-    public Face() {
+    public FaceModel() {
         this.point1 = new Point3DInteger(0, 0, 0);
         this.point2 = new Point3DInteger(0, 0, 0);
         this.point3 = new Point3DInteger(0, 0, 0);
@@ -39,7 +39,7 @@ public class Face {
         this.surfaceValue = 0;
     }
     
-    public Face(Point3DInteger point1, Point3DInteger point2, Point3DInteger point3, String texturePath, int textureVerticalShift, int textureHorizontalShift, int textureRotation, float textureHorizontalScale, float textureVerticalScale, int contentFlags, int surfaceFlags, int surfaceValue) {
+    public FaceModel(Point3DInteger point1, Point3DInteger point2, Point3DInteger point3, String texturePath, int textureVerticalShift, int textureHorizontalShift, int textureRotation, float textureHorizontalScale, float textureVerticalScale, int contentFlags, int surfaceFlags, int surfaceValue) {
         this.point1 = point1;
         this.point2 = point2;
         this.point3 = point3;
@@ -66,7 +66,7 @@ public class Face {
      * @param textureHorizontalScale texture horizontal scale
      * @param textureVerticalScale texture vertical scale
      */
-    public Face(Point3DInteger point1, Point3DInteger point2, Point3DInteger point3, String texturePath, int textureVerticalShift, int textureHorizontalShift, int textureRotation, float textureHorizontalScale, float textureVerticalScale) {
+    public FaceModel(Point3DInteger point1, Point3DInteger point2, Point3DInteger point3, String texturePath, int textureVerticalShift, int textureHorizontalShift, int textureRotation, float textureHorizontalScale, float textureVerticalScale) {
         this(point1, point2, point3, texturePath, textureVerticalShift, textureHorizontalShift, textureRotation, textureHorizontalScale, textureVerticalScale, 0, 0, 0);
     }
     

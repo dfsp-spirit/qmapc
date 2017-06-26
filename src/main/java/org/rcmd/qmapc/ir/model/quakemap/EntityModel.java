@@ -12,19 +12,19 @@ import java.util.List;
  * 
  * @author spirit
  */
-public class Entity {
+public class EntityModel extends QuakeObjectModel {
     
     public int entityID;
-    private final List<EntityProperty> entityProperties;
-    private final List<Brush> brushes;
+    private final List<EntityPropertyModel> entityProperties;
+    private final List<BrushModel> brushes;
     
-    public Entity() {
+    public EntityModel() {
         this.entityID = -1;
         this.entityProperties = new ArrayList<>();
         this.brushes = new ArrayList<>();
     }
     
-    public Entity(int entityID) {
+    public EntityModel(int entityID) {
         this.entityID = entityID;
         this.entityProperties = new ArrayList<>();
         this.brushes = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Entity {
     
     public int getNextFreeBrushIDInEntity() {
         int maxUsedID = 0;
-        for(Brush b : this.brushes) {
+        for(BrushModel b : this.brushes) {
             if(b.brushID >= maxUsedID) {
                 maxUsedID = b.brushID;
             }
@@ -40,23 +40,23 @@ public class Entity {
         return (maxUsedID + 1);
     }
     
-    public List<Brush> getBrushes() {
+    public List<BrushModel> getBrushes() {
         return this.brushes;
     }
     
-    public Boolean addBrush(Brush b) {
+    public Boolean addBrush(BrushModel b) {
         return this.brushes.add(b);
     }
     
-    public List<EntityProperty> getEntityProperties() {
+    public List<EntityPropertyModel> getEntityProperties() {
         return this.entityProperties;
     }
     
-    public Boolean addEntityProperty(EntityProperty p) {
+    public Boolean addEntityProperty(EntityPropertyModel p) {
         return this.entityProperties.add(p);
     }
     
-    public Brush getCurrentBrush() {
+    public BrushModel getCurrentBrush() {
         return this.brushes.get(this.brushes.size() - 1);
     }
     

@@ -7,9 +7,9 @@ import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.rcmd.qmapc.Settings;
-import org.rcmd.qmapc.ir.model.quakemap.Entity;
-import org.rcmd.qmapc.ir.model.quakemap.Brush;
-import org.rcmd.qmapc.ir.model.quakemap.QuakeMapModel;
+import org.rcmd.qmapc.ir.model.quakemap.EntityModel;
+import org.rcmd.qmapc.ir.model.quakemap.BrushModel;
+import org.rcmd.qmapc.ir.model.quakemap.MapModel;
 import org.rcmd.qmapc.ir.parsetree.ParseTree;
 import org.rcmd.qmapc.ir.parsetree.RuleNode;
 import org.rcmd.qmapc.ir.parsetree.TokenNode;
@@ -23,12 +23,12 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
     
     private static final Logger LOGGER = Logger.getLogger(ModelGeneratingVisitor.class.getName());
     
-    private final QuakeMapModel model;
+    private final MapModel model;
     private final Stack<RuleNode> ruleNodeStack;
        
     
     public ModelGeneratingVisitor() {
-        this.model = new QuakeMapModel();
+        this.model = new MapModel();
         this.ruleNodeStack = new Stack<>();
     }
 
@@ -54,7 +54,7 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
     }
 
     @Override
-    public QuakeMapModel getMapModel() {
+    public MapModel getMapModel() {
         return this.model;
     }
     
@@ -78,7 +78,7 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
     
     private String visitEntityRuleNode(RuleNode visitingRuleNode) {
         
-        Entity e = new Entity();
+        EntityModel e = new EntityModel();
         this.model.addEntity(e);
         
         e.entityID = this.model.getNextFreeEntityIDInLevel();

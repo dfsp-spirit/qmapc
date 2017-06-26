@@ -13,14 +13,14 @@ import org.rcmd.qmapc.ir.model.basic.Point5DTriple;
  * part that is contained inside a single surrounding brush.
  * @author spirit
  */
-public class PatchMesh {
+public class PatchMeshModel extends QuakeObjectModel {
     
     public String type;             // usually "PatchDef2"
     public Point5DFloat point5D;
     public String texturePath;
     public List<Point5DTriple> coordLines;
     
-    public PatchMesh() {
+    public PatchMeshModel() {
         this.coordLines = new ArrayList<>();
     }
     

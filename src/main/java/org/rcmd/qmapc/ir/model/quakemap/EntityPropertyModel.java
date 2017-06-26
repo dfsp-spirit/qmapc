@@ -8,12 +8,12 @@ package org.rcmd.qmapc.ir.model.quakemap;
  * 
  * @author spirit
  */
-public class EntityProperty {
+public class EntityPropertyModel extends QuakeObjectModel {
     
     public String key;
     public String value;
     
-    public EntityProperty(String key, String value) {
+    public EntityPropertyModel(String key, String value) {
         this.key = key;
         this.value = value;
     }

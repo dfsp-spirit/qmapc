@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class BrushTest {
     
-    Brush brush;
+    BrushModel brush;
     
     @After
     public void tearDown() {
@@ -22,17 +22,17 @@ public class BrushTest {
     @org.junit.Test
     public void testItHasTheExpectedBrushID() {
         int brushID = 5;
-        Brush b = new Brush(brushID);
+        BrushModel b = new BrushModel(brushID);
         assertEquals(5, b.brushID);
     }
     
     @org.junit.Test
     public void testItHasTheExpectedNumberOfFaces() {
         int brushID = 5;
-        Brush b = new Brush(brushID);
-        b.addFace(new Face());
-        b.addFace(new Face());
-        b.addFace(new Face());
+        BrushModel b = new BrushModel(brushID);
+        b.addFace(new FaceModel());
+        b.addFace(new FaceModel());
+        b.addFace(new FaceModel());
         assertEquals(5, b.brushID);
         assertEquals(3, b.getFaces().size());
     }
