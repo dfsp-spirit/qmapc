@@ -13,7 +13,7 @@ import org.rcmd.qmapc.parsing.lexer.Lexer;
  *
  * @author spirit
  */
-public class ParseTreeTrackingParser extends Parser {
+public class ParseTreeTrackingParser extends Parser implements IParseTreeTrackingParser {
 
     /**
      * The root of the parse tree build by this parser.
@@ -42,6 +42,7 @@ public class ParseTreeTrackingParser extends Parser {
     /**
      * @return the root
      */
+    @Override
     public ParseTree getRoot() {
         return root;
     }
@@ -49,6 +50,7 @@ public class ParseTreeTrackingParser extends Parser {
     /**
      * @return the currentNode
      */
+    @Override
     public ParseTree getCurrentNode() {
         return currentNode;
     }
