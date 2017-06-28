@@ -39,7 +39,7 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
     public static final String RULE_PATCHMESH_POINT = "RULE_PATCHMESH_POINT";
     public static final String RULE_BRUSH_PATCHMESH_COORDS = "RULE_BRUSH_PATCHMESH_COORDS";
 
-    Boolean trackParseTree = true;
+    private Boolean trackParseTree = true;
     private int numEntities;
     private int numBrushes;
     private int numFaces;
@@ -62,21 +62,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
     public void map() {
 
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_MAP);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.mapCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -97,21 +97,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void point3DInteger() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_BRUSH_FACE_POINT);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.point3DCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
 
@@ -119,21 +119,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void point5D() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_PATCHMESH_POINT);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.point5DCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
 
@@ -155,21 +155,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void q3PatchDef() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_BRUSH_PATCHDEF);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.q3PatchDefCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
 
@@ -177,21 +177,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void q2BrushFace() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_BRUSH_FACE);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.q2BrushFaceCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -214,21 +214,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void q3PatchMeshCoords() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_BRUSH_PATCHMESH_COORDS);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.q3PatchMeshCoordsCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
 
@@ -267,63 +267,63 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void q2BrushWithBrushIDComment() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_BRUSH_ID);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.q2BrushWithBrushIDCommentCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
 
     public void texturePath() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_TEXTURE_PATH);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.texturePathCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
 
     public void textureHorizontalShift() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_TEXTURE_HORIZONTAL_SHIFT);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.textureHorizontalShiftCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -334,21 +334,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void textureVerticalShift() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_TEXTURE_VERTICAL_SHIFT);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.textureVerticalShiftCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -359,21 +359,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void textureRotation() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_TEXTURE_ROTATION);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.textureRotationCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -398,21 +398,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void q2BrushWithoutBrushIDComment() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_BRUSH);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.q2BrushWithoutBrushIDCommentCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -458,21 +458,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
     public void q2EntityWithEntityIDComment() {
 
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_ENTITY_ID);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.q2EntityWithEntityIDCommentCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
 
@@ -486,21 +486,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
     private void q2EntityWithoutEntityIDComment() {
 
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_ENTITY);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.q2EntityWithoutEntityIDCommentCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -532,21 +532,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
     public void entityProperty() {
 
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_ENTITY_PROPERTY);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.entityPropertyCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
 
@@ -554,21 +554,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void entityPropertyKey() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_ENTITY_PROPERTY_KEY);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.entityPropertyKeyCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
 
@@ -585,21 +585,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void entityPropertyValue() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_ENTITY_PROPERTY_VALUE);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.entityPropertyValueCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
 
@@ -611,21 +611,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void textureHorizontalScale() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_TEXTURE_HORIZONTAL_SCALE);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.textureHorizontalScaleCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -636,21 +636,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void textureVerticalScale() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_TEXTURE_VERTICAL_SCALE);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.textureVerticalScaleCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -661,21 +661,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void faceContentFlags() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_FACE_CONTENT_FLAGS);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.faceContentFlagsCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -686,21 +686,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void faceSurfaceFlags() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_FACE_SURFACE_FLAGS);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.faceSurfaceFlagsCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -711,21 +711,21 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
 
     public void faceSurfaceValue() {
         ParseTree _saved = null;
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             RuleNode r = new RuleNode(RULE_FACE_SURFACE_VALUE);
-            if (this.root == null) {
+            if (this.getRoot() == null) {
                 this.root = r;
-                currentNode = root;
+                currentNode = getRoot();
             } else {
-                this.currentNode.addChild(r);
+                this.getCurrentNode().addChild(r);
             }
-            _saved = currentNode;
+            _saved = getCurrentNode();
             currentNode = r;
         }
 
         this.faceSurfaceValueCore();
 
-        if (this.trackParseTree) {
+        if (this.getTrackParseTree()) {
             currentNode = _saved;
         }
     }
@@ -765,5 +765,19 @@ public class QuakeMapParser extends ParseTreeTrackingParser implements IQuakeMap
     @Override
     public void entity() {
         this.q2EntityWithEntityIDComment();
+    }
+
+    /**
+     * @return the trackParseTree
+     */
+    public Boolean getTrackParseTree() {
+        return trackParseTree;
+    }
+
+    /**
+     * @param trackParseTree the trackParseTree to set
+     */
+    public void setTrackParseTree(Boolean trackParseTree) {
+        this.trackParseTree = trackParseTree;
     }
 }

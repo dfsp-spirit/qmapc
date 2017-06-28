@@ -35,7 +35,7 @@ public class NodeCountVisitorTest {
         q2mp.q2EntityWithEntityIDComment();
         
         INodeStatsVisitor visitor = new NodeCountVisitor();
-        q2mp.root.visit(visitor);
+        q2mp.getRoot().visit(visitor);
         
     }
     
@@ -48,7 +48,7 @@ public class NodeCountVisitorTest {
         q2mp.q2EntityWithEntityIDComment();
         
         INodeStatsVisitor visitor = new NodeCountVisitor();
-        q2mp.root.visit(visitor);
+        q2mp.getRoot().visit(visitor);
         
         assertEquals(q2mp.getNumBrushes(), visitor.getNumBrushNodes());
         assertEquals(q2mp.getNumFaces(), visitor.getNumFaceNodes());

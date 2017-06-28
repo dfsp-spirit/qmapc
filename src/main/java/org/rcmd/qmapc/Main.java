@@ -56,7 +56,7 @@ public class Main {
         System.out.println(Settings.getInstance().getAppTag() + "Visiting parse tree to generate internal model.");
         
         IMapModelGeneratingVisitor visitor = new ModelGeneratingVisitor();
-        q2mp.root.visit(visitor);
+        q2mp.getRoot().visit(visitor);
         
         MapModel model = visitor.getMapModel();
         

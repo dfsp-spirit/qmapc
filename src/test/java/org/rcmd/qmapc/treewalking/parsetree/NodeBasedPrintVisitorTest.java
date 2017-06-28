@@ -35,7 +35,7 @@ public class NodeBasedPrintVisitorTest {
         q2mp.q2EntityWithEntityIDComment();
         
         IDepthAwareParseTreeVisitor visitor = new NodeBasedPrintVisitor();
-        q2mp.root.visit(visitor);
+        q2mp.getRoot().visit(visitor);
     }
     
 }
