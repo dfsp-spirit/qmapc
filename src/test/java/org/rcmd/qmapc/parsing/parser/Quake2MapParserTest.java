@@ -18,7 +18,7 @@ import org.rcmd.qmapc.parsing.lexer.Token;
 public class Quake2MapParserTest {
 
     Quake2MapLexer q2ml;
-    Quake2MapParser q2mp;
+    QuakeMapParser q2mp;
     Token token;
     
     public static final String inputWorldSpawnWith2Brushes = "// entity 0\n"
@@ -80,7 +80,7 @@ public class Quake2MapParserTest {
         String input = "\"classname\" \"worldspawn\"";
 
         q2ml = new Quake2MapLexer(input);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
 
         q2mp.entityProperty();
     }
@@ -90,7 +90,7 @@ public class Quake2MapParserTest {
         String input = "\"_color\" \"1.0 0.8 0.8\"";
 
         q2ml = new Quake2MapLexer(input);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
 
         q2mp.entityProperty();
     }
@@ -100,7 +100,7 @@ public class Quake2MapParserTest {
         String input = "\"message\" \"This is a string with ;(){} many special . chars and 234234 digits.s\"";
 
         q2ml = new Quake2MapLexer(input);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
 
         q2mp.entityProperty();
     }
@@ -118,7 +118,7 @@ public class Quake2MapParserTest {
                 + "}";
 
         q2ml = new Quake2MapLexer(input);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
 
         q2mp.q2BrushWithBrushIDComment();
     }
@@ -131,7 +131,7 @@ public class Quake2MapParserTest {
                 + "}";
 
         q2ml = new Quake2MapLexer(input);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
 
         q2mp.q2BrushWithBrushIDComment();
     }
@@ -162,7 +162,7 @@ public class Quake2MapParserTest {
                 + "}\n"
                 + "}";
         q2ml = new Quake2MapLexer(input);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
 
         q2mp.q2EntityWithEntityIDComment();
 
@@ -172,14 +172,14 @@ public class Quake2MapParserTest {
     public void testItProperlyParsesAWorldspawnEntityWithTwoBrushes() {
         
         q2ml = new Quake2MapLexer(Quake2MapParserTest.inputWorldSpawnWith2Brushes);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
 
         q2mp.q2EntityWithEntityIDComment();
         
-        assertEquals(1, q2mp.numEntities);
-        assertEquals(2, q2mp.numBrushes);
-        assertEquals(12, q2mp.numFaces);
-        assertEquals(0, q2mp.numPatchMeshes);
+        assertEquals(1, q2mp.getNumEntities());
+        assertEquals(2, q2mp.getNumBrushes());
+        assertEquals(12, q2mp.getNumFaces());
+        assertEquals(0, q2mp.getNumPatchMeshes());
 
     }
 
@@ -295,12 +295,12 @@ public class Quake2MapParserTest {
                 + "}\n"
                 + "}";
         q2ml = new Quake2MapLexer(input);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
         
-        assertEquals(0, q2mp.numEntities);
-        assertEquals(0, q2mp.numBrushes);
-        assertEquals(0, q2mp.numFaces);
-        assertEquals(0, q2mp.numPatchMeshes);
+        assertEquals(0, q2mp.getNumEntities());
+        assertEquals(0, q2mp.getNumBrushes());
+        assertEquals(0, q2mp.getNumFaces());
+        assertEquals(0, q2mp.getNumPatchMeshes());
 
         q2mp.q2EntityWithEntityIDComment();
     }

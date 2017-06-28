@@ -11,7 +11,7 @@ import org.rcmd.qmapc.ioutil.IOUtil;
 import org.rcmd.qmapc.ir.model.quakemap.MapModel;
 import org.rcmd.qmapc.ir.translation.Quake2MapGenerator;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
-import org.rcmd.qmapc.parsing.parser.Quake2MapParser;
+import org.rcmd.qmapc.parsing.parser.QuakeMapParser;
 import org.rcmd.qmapc.treewalking.parsetree.IMapModelGeneratingVisitor;
 import org.rcmd.qmapc.treewalking.parsetree.ModelGeneratingVisitor;
 
@@ -48,7 +48,7 @@ public class Main {
         }
         
         Quake2MapLexer q2ml = new Quake2MapLexer(inputMapContent);
-        Quake2MapParser q2mp = new Quake2MapParser(q2ml);
+        QuakeMapParser q2mp = new QuakeMapParser(q2ml);
         
         System.out.println(Settings.getInstance().getAppTag() + "Parsing input map '" + Settings.getInstance().getAppSettingString("inputFile") + "' of length " + inputMapContent.length() + " characters.");        
         q2mp.map();

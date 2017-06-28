@@ -13,7 +13,7 @@ import org.rcmd.qmapc.ir.model.quakemap.MapModel;
 import org.rcmd.qmapc.ir.parsetree.ParseTree;
 import org.rcmd.qmapc.ir.parsetree.RuleNode;
 import org.rcmd.qmapc.ir.parsetree.TokenNode;
-import org.rcmd.qmapc.parsing.parser.Quake2MapParser;
+import org.rcmd.qmapc.parsing.parser.QuakeMapParser;
 
 /**
  * A visitor that generates a model while visiting parse tree nodes.
@@ -42,9 +42,9 @@ public class ModelGeneratingVisitor implements IMapModelGeneratingVisitor, IPars
         ruleNodeStack.add(visitingRuleNode);
         
         switch (visitingRuleNode.name) {
-            case Quake2MapParser.RULE_MAP:
+            case QuakeMapParser.RULE_MAP:
                 return this.visitMapRuleNode(visitingRuleNode);
-            case Quake2MapParser.RULE_ENTITY:
+            case QuakeMapParser.RULE_ENTITY:
                 return this.visitEntityRuleNode(visitingRuleNode);
             default:
                 LOGGER.log(Level.SEVERE, "Hit unexpected RuleNode of type '" + visitingRuleNode.name + "' while walking parse tree.");

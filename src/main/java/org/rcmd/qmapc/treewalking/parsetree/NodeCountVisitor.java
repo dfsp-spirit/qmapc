@@ -7,7 +7,7 @@ import org.rcmd.qmapc.ir.parsetree.ParseTree;
 import org.rcmd.qmapc.ir.parsetree.RuleNode;
 import org.rcmd.qmapc.ir.parsetree.TokenNode;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
-import org.rcmd.qmapc.parsing.parser.Quake2MapParser;
+import org.rcmd.qmapc.parsing.parser.QuakeMapParser;
 
 /**
  * A visitor that does nothing but to keep track of the number
@@ -56,16 +56,16 @@ public class NodeCountVisitor implements INodeStatsVisitor, IParseTreeVisitor, I
         ruleNodeCount++;                
         
         switch (r.name) {
-            case Quake2MapParser.RULE_BRUSH:
+            case QuakeMapParser.RULE_BRUSH:
                 this.ruleTypeBrushCount++;
                 break;
-            case Quake2MapParser.RULE_BRUSH_FACE:
+            case QuakeMapParser.RULE_BRUSH_FACE:
                 this.ruleTypeBrushFaceCount++;
                 break;
-            case Quake2MapParser.RULE_ENTITY:
+            case QuakeMapParser.RULE_ENTITY:
                 this.ruleTypeEntityCount++;
                 break;
-            case Quake2MapParser.RULE_BRUSH_PATCHDEF:
+            case QuakeMapParser.RULE_BRUSH_PATCHDEF:
                 this.ruleTypePatchMeshCount++;
                 break;
             default:

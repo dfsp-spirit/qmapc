@@ -7,7 +7,7 @@ import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.rcmd.qmapc.parsing.lexer.Quake2MapLexer;
 import org.rcmd.qmapc.parsing.lexer.Token;
-import org.rcmd.qmapc.parsing.parser.Quake2MapParser;
+import org.rcmd.qmapc.parsing.parser.QuakeMapParser;
 import org.rcmd.qmapc.parsing.parser.Quake2MapParserTest;
 
 /**
@@ -17,7 +17,7 @@ import org.rcmd.qmapc.parsing.parser.Quake2MapParserTest;
 public class NodeBasedPrintVisitorTest {
     
     Quake2MapLexer q2ml;
-    Quake2MapParser q2mp;
+    QuakeMapParser q2mp;
     Token token;
     
     @After
@@ -30,7 +30,7 @@ public class NodeBasedPrintVisitorTest {
     public void testItWalksAParseTreeWithoutErrors() {
         
         q2ml = new Quake2MapLexer(Quake2MapParserTest.inputWorldSpawnWith2Brushes);
-        q2mp = new Quake2MapParser(q2ml);
+        q2mp = new QuakeMapParser(q2ml);
 
         q2mp.q2EntityWithEntityIDComment();
         
